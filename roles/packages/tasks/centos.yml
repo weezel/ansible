@@ -1,0 +1,39 @@
+---
+- name: "CENTOS: Install EPEL repo"
+  yum:
+    name: epel-release
+    state: latest
+    update_cache: yes
+  become_user: root
+  become: true
+  tags:
+    - packages
+
+- name: "CENTOS: Install packages"
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - bwm-ng
+    - curl
+    - dstat
+    - git
+    - mtr
+    - ncdu
+    - nload
+    - nmap
+    - ntpdate
+    - openssh-server
+    - policycoreutils-python
+    - rsync
+    - strace
+    - tcpdump
+    - tmux
+    - vim-common
+    - which
+    - whois
+  become_user: root
+  become: true
+  tags:
+    - packages
+

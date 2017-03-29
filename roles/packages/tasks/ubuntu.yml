@@ -1,0 +1,41 @@
+---
+- name: "UBUNTU: No suggested nor recommended packages"
+  copy:
+    src: apt.conf
+    dest: /etc/apt/apt.conf
+    owner: root
+    group: root
+    mode: 0644
+  become_user: root
+  become: true
+  tags:
+    - packages
+
+- name: "UBUNTU: Install packages"
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - bwm-ng
+    - curl
+    - dstat
+    - git
+    - mtr
+    - ncdu
+    - nload
+    - nmap
+    - ntpdate
+    - openssh-server
+    - policycoreutils
+    - rsync
+    - strace
+    - tcpdump
+    - tmux
+    - vim-common
+    - whois
+  become_user: root
+  become: true
+  tags:
+    - packages
+

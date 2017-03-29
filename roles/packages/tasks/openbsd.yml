@@ -1,0 +1,28 @@
+---
+- name: "OBSD: Install packages"
+  openbsd_pkg:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - bwm-ng
+    - curl
+    - git
+    - mtr
+    - nload
+    - nmap
+    - ntpdate
+    - rsync
+    - tcpdump
+    - vim-common
+    - ggrep
+    - iftop
+    - logfmon
+    - ncdu
+    - pkglocatedb
+    - vnstat
+    - sysclean
+  become_user: root
+  become: true
+  tags:
+    - packages
+

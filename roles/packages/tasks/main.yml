@@ -1,0 +1,11 @@
+---
+- include: ubuntu.yml
+  when: ansible_os_family == "Debian" or
+        ansible_os_family == "Linuxmint"
+
+- include: openbsd.yml
+  when: ansible_os_family == "OpenBSD"
+
+- include: centos.yml
+  when: ansible_os_family == "RedHat"
+
