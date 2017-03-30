@@ -1,0 +1,19 @@
+---
+- name: "Get dot config files"
+  git:
+    repo: "https://github.com/weezel/confs.git"
+    dest: "{{ home_directory }}/configs"
+    clone: yes
+    update: yes
+  tags:
+    - getconfigs
+
+- name: "Get script files"
+  git:
+    repo: "https://github.com/weezel/scripts.git"
+    dest: "{{ home_directory }}/scripts"
+    clone: yes
+    update: yes
+  tags:
+    - getscripts
+
