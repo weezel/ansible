@@ -27,7 +27,7 @@ elif [ $# -eq 2 ]; then
 		echo "Error: File ${2} doesn't exist"
 		exit 1
 	fi
-	${ANSIBLE} all -l "${1}" -i "${2}" -k -m setup --tree remofacts
+	${ANSIBLE} all -l "${1}" -i "${2}" -k -m setup --tree remotefacts
 else
 	usage
 fi
