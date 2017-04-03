@@ -1,3 +1,6 @@
 ---
+- include: iptables.yml
+  when: ansible_system == "Linux"
+
 - include: pf.yml
   when: ansible_os_family == "OpenBSD"
