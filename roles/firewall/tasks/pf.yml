@@ -1,4 +1,12 @@
 ---
+- name: Check that blacklist.ips exists for pf.conf
+  file:
+    path: /etc/blacklist.ips
+    state: touch
+    owner: root
+    group: wheel
+    mode: 0664
+
 - name: Copy pf.conf over
   template:
     src: pf.conf.j2
