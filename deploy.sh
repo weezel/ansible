@@ -5,7 +5,7 @@ ANSIBLE_PLAYBOOK=$(which ansible-playbook)
 
 usage()
 {
-	printf "usage: %s: inventoryfile tags playbookname\n" ${0}
+	printf "usage: %s: inventoryfile tags rolename\n" ${0}
 	exit 1
 }
 
