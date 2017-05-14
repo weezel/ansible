@@ -1,1 +1,13 @@
-home_directory: "/home/weezel"
+home_directory: "/home/vagrant"
+
+network:
+  internet_if: "em0"
+  lan_if: "em1"
+  wlan_if: "em2"
+  pflow_if: "pflow0"
+  vether_if: "vether0"
+
+  router_ip: "192.168.222.1"
+  router_mac: "aa:bb:cc:dd"
+  router_subnet: "192.168.222.0/26"
+
