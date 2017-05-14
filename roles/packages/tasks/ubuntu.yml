@@ -6,7 +6,6 @@
     owner: root
     group: root
     mode: 0644
-  become_user: root
   become: true
   tags:
     - packages
@@ -34,7 +33,6 @@
     - tmux
     - vim-common
     - whois
-  become_user: root
   become: true
   tags:
     - packages
