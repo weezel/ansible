@@ -1,0 +1,8 @@
+---
+- hosts: servers
+  roles:
+  - { role: network/configuration }
+  #  - { role: network/dhcpd }
+  #  - { role: network/pflow }
+  #  - { role: packages }
+

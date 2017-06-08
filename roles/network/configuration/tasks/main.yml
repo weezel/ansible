@@ -1,0 +1,4 @@
+---
+- name: Install (switch) router
+  include: router_switch.yml
+  tags: switch_router

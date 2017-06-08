@@ -1,0 +1,36 @@
+---
+- name: Initialize LAN hostname.if files
+  template:
+    src: hostname.lan
+    dest: "/etc/hostname.{{item}}"
+    owner: root
+    group: wheel
+    mode: 0640
+  with_items:
+    - "{{network.lan_if}}"
+  become: true
+
+- name: Initialize internet hostname.if files
+  template:
+    src: hostname.internet
+    dest: "/etc/hostname.{{item}}"
+    owner: root
+    group: wheel
+    mode: 0640
+  with_items:
+    - "{{network.internet_if}}"
+  become: true
+
+- name: Initialize pseudo interface hostname.if files
+  template:
+    src: "hostname.{{item |regex_replace('[0-9]+$')}}"
+    dest: "/etc/hostname.{{item}}"
+    owner: root
+    group: wheel
+    mode: 0640
+  with_items:
+    - "{{network.bridge_if}}"
+    - "{{network.vether_if}}"
+    - "{{network.pflow_if}}"
+  become: true
+
