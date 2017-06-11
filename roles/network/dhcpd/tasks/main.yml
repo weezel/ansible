@@ -1,0 +1,5 @@
+---
+- include: dhcpd_obsd.yml
+  when: ansible_os_family == "OpenBSD"
+  tags: dhcpd
+

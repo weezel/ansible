@@ -1,0 +1,51 @@
+# $ sipcalc -bi -n4 192.168.222.0/26
+#
+# Host address range
+# 192.168.222.1 - 192.168.222.63
+# - 62 host per subnet
+# - 4 maximum subnets
+# - 26 Mask bits
+# Network mask            - 255.255.255.192
+# Network mask (bits)     - 26
+# Broadcast address       - 192.168.222.63
+# Cisco wildcard          - 0.0.0.63
+# Addresses in network    - 64
+# Network range           - 192.168.222.0 - 192.168.222.63
+# Usable range            - 192.168.222.1 - 192.168.222.62
+#
+# Host address            - 11000000.10101000.11011110.00000000
+# Network mask            - 11111111.11111111.11111111.11000000
+# Network range           - 11000000.10101000.11011110.00000000 -
+#                           11000000.10101000.11011110.00111111
+# Usable range            - 11000000.10101000.11011110.00000001 -
+#                           11000000.10101000.11011110.00111110
+#
+# [Networks]
+# Network                 - 192.168.222.0   - 192.168.222.63 (current)
+# Network                 - 192.168.222.64  - 192.168.222.127
+# Network                 - 192.168.222.128 - 192.168.222.191
+# Network                 - 192.168.222.192 - 192.168.222.255
+#
+# -
+
+option domain-name "lan";
+option domain-name-servers {{network.router_ip_addr}};
+option broadcast-address {{network.broadcast}};
+
+shared-network lan {
+	subnet {{network.subnet}} netmask {{network.netmask}} {
+		option routers {{network.router_ip_addr}};
+		#deny unknown-clients;
+
+		range 192.168.222.30 192.168.222.40;
+
+		host {{common.router_name}} {
+			option host-name "{{common.router_name}}";
+			hardware ethernet {{network.router_mac}};
+			fixed-address {{network.router_ip_addr}};
+			filename "pxeboot";
+			next-server {{network.router_ip_addr}};
+		}
+	} # subnet ends
+}
+

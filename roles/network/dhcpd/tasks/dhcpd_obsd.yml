@@ -1,0 +1,40 @@
+---
+- name: Enable dhcpd
+  command: "rcctl enable dhcpd"
+  become: true
+  become_method: doas
+  tags:
+    - dhcpd
+
+- name: Configure dhcpd in /etc/rc.conf.local
+  command: "rcctl set dhcpd flags {{network.vether_if[0]}}"
+  become: true
+  become_method: doas
+  tags:
+    - dhcpd
+
+- name: Upload dhcpd.conf
+  template:
+    src: dhcpd.conf.j2
+    dest: /etc/dhcpd.conf
+    owner: root
+    group: wheel
+    mode: 0640
+  become: true
+  become_method: doas
+  # FIXME why doesn't this work?
+  #  notify:
+  #    - restart dhcpd
+  tags:
+    - dhcpd
+
+- name: Restart dhcpd
+  service:
+    name: dhcpd
+    state: restarted
+  become: true
+  become_method: doas
+  tags:
+    - dhcpd
+
+

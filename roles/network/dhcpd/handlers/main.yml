@@ -1,0 +1,8 @@
+---
+- name: restart dhcpd
+  service:
+    name: dhcpd
+    state: restarted
+  become: true
+  become_method: doas
+

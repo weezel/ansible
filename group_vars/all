@@ -1,5 +1,16 @@
 home_directory: "/home/vagrant"
 
+common:
+  router_name: "fw"
+
+host_configurations:
+  host1:
+    mac: "aa:bb:cc"
+    ip_addr: "1.2.3.4"
+  host2:
+    mac: "dd:ee:ff"
+    ip_addr: "5.6.7.8"
+
 network:
   internet_if: ["re0"]
   lan_if: ["re1", "re2"]
@@ -11,10 +22,14 @@ network:
 
   router_ip_addr: "192.168.222.1"
 
-  subnet: "255.255.255.192"
-  broadcast": "255.255.255.63"
+  subnet: "192.168.222.0"
+  netmask: "255.255.255.192"
+  broadcast: "192.168.222.63"
+  cidr_addr: "192.168.222.0/26"
   router_mac: "aa:bb:cc:dd"
-  cidr_prefix: "192.168.222.0/26"
+
+pf:
+  uplink_bw: "50 Mbps"
 
 network_bridge_devs: "{{network.lan_if + network.vether_if}}"
 
