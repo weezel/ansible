@@ -1,2 +1,2 @@
 description "COMBINED-LAN"
-#inet 192.168.222.1 255.255.255.192 192.168.222.63
+inet {{network.router_ip_addr}} {{network.subnet}} {{network.broadcast}}
