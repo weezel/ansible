@@ -1,0 +1,119 @@
+set mailtime 1m
+
+# Mail command. This may be /bin/mail on some systems.
+set mailcmd "/usr/bin/mail -s \"`hostname` `date` log report\" root"
+
+file "/var/log/messages" tag messages
+file "/var/log/maillog" tag mail
+file "/var/log/secure" tag secure
+file "/var/log/authlog" tag auth
+file "/var/log/daemon" tag daemon
+#file "/var/www/logs/error.log" tag nginx
+
+match in * "last message repeated [0-9] times" ignore
+
+# newsyslog
+match in * "newsyslog\\[[0-9]*\\]: logfile turned over" ignore
+
+# logfmon
+match in messages "logfmon: started" ignore
+
+# syslogd
+match in messages "syslogd: restart" ignore
+
+# symon
+match in messages "symux: rrd_update:.*" ignore
+match in messages "symux: rrdupdate -- .*" ignore
+
+match in messages "symux: forked client\\([0-9]*\\) for incoming connection from 192.168.222.[0-9]+:[0-9]*" ignore
+match in messages "symux: client process [0-9]* exited" ignore
+
+# smartd
+match in { daemon messages }"smartd\\[[0-9]*\\]: Device: /dev/wd1c, SMART Usage Attribute: 199 UDMA_CRC_Error_Count changed from [0-9]* to [0-9]*" ignore
+match in { daemon messages } "smartd\\[[0-9]*\\]: Device: /dev/sd[0-9]c, SMART Usage Attribute: 199 UDMA_CRC_Error_Count changed from [0-9]* to [0-9]*" ignore
+match in { daemon messages } "smartd\\[[0-9]*\\]: Device: /dev/sd[0-9]c (.*) 194 Temperature_Celsius changed from [0-9]* to [0-9]*" ignore
+match in { daemon messages } "smartd\\[[0-9]*\\]: Device: /dev/sd[0-9]c \\[SAT\\], same Attribute" ignore
+match in { daemon messages } "smartd\\[[0-9]*\\]: Device: /dev/sd[0-9]c \\[SAT\\], previous self-test completed without error" ignore
+match in { daemon messages } "smartd\\[[0-9]*\\]: Device: /dev/sd[0-9]c \\[SAT\\], previous self-test was interrupted by the host with a reset" ignore
+
+# ntpd
+#match in { messages daemon } "ntpd\\[[0-9]*\\]: peer ([0-9.]*) now invalid" ignore
+match in { daemon messages } "ntpd\\[[0-9]*\\]: adjusting local clock by [0-9.-]*s" ignore
+match in { daemon messages } "ntpd\\[[0-9]*\\]: adjusting clock frequency by .*" ignore
+match in { daemon messages } "ntpd\\[[0-9]*\\]: peer .* now (in)?valid" ignore
+match in { daemon messages } "ntpd\\[[0-9]*\\]: peer \\([0-9.]*\\) now invalid" ignore
+match in { daemon messages } "ntpd\\[[0-9]*\\]: ntp engine ready" ignore
+match in { daemon messages } "ntpd\\[[0-9]*\\]: clock is now synced" ignore
+match in { daemon messages } "ntpd\\[[0-9]*\\]: clock is now unsynced" ignore
+match in { daemon messages } "ntpd\\[[0-9]*\\]: [0-9] out of [0-9] (peers|sensors) valid" ignore
+match in { daemon messages } "ntpd\\[[0-9]*\\]: bad sensor upd0" ignore
+match in { daemon messages } "ntpd\\[[0-9]*\\]: reply from [0-9.]: not synced .*" ignore
+
+# identd
+#match in messages "identd\\[[0-9]*\\]: Connection from localhost" ignore
+#match in messages "identd\\[[0-9]*\\]: request for .* from localhost" ignore
+#match in messages "identd\\[[0-9]*\\]: Connection from nikita" ignore
+#match in messages "identd\\[[0-9]*\\]: request for .* from nikita" ignore
+#match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : nicholas" ignore
+#match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : smmsp" ignore
+#match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : root" ignore
+
+# dhcpd
+match in daemon "dhcpd\[[0-9]*\]: DHCPACK" ignore
+match in daemon "dhcpd\[[0-9]*\]: DHCPDISCOVER" ignore
+match in daemon "dhcpd\[[0-9]*\]: DHCPINFORM" ignore
+match in daemon "dhcpd\[[0-9]*\]: DHCPNACK" ignore
+match in daemon "dhcpd\[[0-9]*\]: DHCPNAK" ignore
+match in daemon "dhcpd\[[0-9]*\]: DHCPOFFER" ignore
+match in daemon "dhcpd\[[0-9]*\]: DHCPRELEASE" ignore
+match in daemon "dhcpd\[[0-9]*\]: DHCPREQUEST" ignore
+match in daemon "dhcpd\[[0-9]*\]: already acking lease [0-9.]" ignore
+
+# dhclient
+match in daemon "dhclient\\[[0-9]*\\]: DHCPREQUEST on {{ openbsd.internet_if }}[0-9] to " ignore
+match in daemon "dhclient\\[[0-9]*\\]: DHCPACK from " ignore
+match in daemon "dhclient\\[[0-9]*\\]: bound to " ignore
+
+# nfcapd
+match in daemon "nfcapd\[[0-9]*\]: Total" ignore
+match in daemon "nfcapd\[[0-9]*\]: Ident:" ignore
+
+# opensmtpd
+match in mail "smtp-in: New session .*" ignore
+match in mail "smtp-in: Accepted message .*" ignore
+match in mail "smtp-in: Closing session .*" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=connected address=.* host=.*" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=closed .* reason=quit" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=message .* to=.*@fw.lan.*" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ mda event=delivery .* result=Ok stat=Delivered" ignore
+
+# sshd
+# sshd context rules
+# messages that match contexts fall through to following rules.
+#match in auth "sshd\\[\\([0-9]*\\)\\]: Invalid user .* from [0-9.]*" open "sshd-$1" expire 2m
+#match in auth "sshd\\[\\([0-9]*\\)\\]: input_userauth_request: invalid user .*" open "sshd-$1" expire 2m pipe "/usr/bin/mail -s \"`date` ssh attempt (expired)\" root"
+#match in auth "sshd\\[\\([0-9]*\\)\\]: .*" append "sshd-$1"
+#match in auth "sshd\\[\\([0-9]*\\)\\]: Received disconnect from .*" close "sshd-$1" pipe "/usr/bin/mail -s \"`date` ssh attempt\" root"
+
+# normal sshd rules
+match in auth "sshd\\[[0-9]*\\]: Connection closed by 192.168.222.[0-9]+" ignore
+match in auth "sshd\\[[0-9]*\\]: Disconnected from 192.168.222.[0-9]+" ignore
+match in auth "sshd\\[[0-9]*\\]: Accepted publickey for weezel from 192.168.222.[1-9]+ port [0-9]" ignore
+match in auth "sshd\\[[0-9]*\\]: Received disconnect from 192.168.222.[0-9]+ port.*: disconnected by user" ignore
+
+#match in auth "sshd\\[[0-9]*\\]: Invalid user .* from \\([0-9.]*\\)" exec "grep $1 /etc/pf.ignore || (echo $1 >> /etc/pf.ignore; pfctl -t ignore -T add $1; pfctl -k $1)"
+#match in auth "sshd\\[[0-9]*\\]: scanned from \\([0-9.]*\\) with SSH-1.0-SSH_Version_Mapper.  Don't panic." exec "grep $1 /etc/pf.ignore || (echo $1 >> /etc/pf.ignore; pfctl -t ignore -T add $1; pfctl -k $1)"
+
+# fetchmail
+match in mail "fetchmail\\[[0-9]*\\]: .*" ignore
+
+# sudo
+match in secure "sudo:[ \t]*weezel .*" ignore
+match in secure "sudo:[ \t]*root .*" ignore
+
+# sendmail
+match in mail "sm-mta\\[[0-9]*\\]: .*" ignore
+match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: to=root, ctladdr=.*, delay=00:00:0[0-9], xdelay=00:00:0[0-9], mailer=relay, pri=[0-9]*, relay=.*, dsn=2.0.0, stat=Sent .*" ignore
+match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: to=nicholas, ctladdr=.*, delay=00:00:0[0-9], xdelay=00:00:0[0-9], mailer=relay, pri=[0-9]*, relay=.*, dsn=2.0.0, stat=Sent .*" ignore
+match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: from=root, size=[0-9]*, class=[0-9], nrcpts=[0-9], msgid=.*, relay=.*" ignore
+match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: from=nicholas, size=[0-9]*, class=[0-9], nrcpts=[0-9], msgid=.*, relay=.*" ignore

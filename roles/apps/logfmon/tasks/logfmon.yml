@@ -1,0 +1,23 @@
+---
+- name: Upload logfmon.conf
+  template:
+    src: logfmon.conf.j2
+    dest: /etc/logfmon.conf
+    owner: root
+    group: wheel
+    mode: 0640
+  become: true
+  become_method: doas
+  register:
+    logfmon_conf
+
+- name: Enable Logfmon
+  service:
+    name: logfmon
+    enabled: yes
+  become: true
+  become_method: doas
+  notify:
+    - restart logfmon
+  when: logfmon_conf.changed
+
