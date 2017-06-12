@@ -1,5 +1,7 @@
 *.o
 *.pyc
 .vagrant
+Vagrantfile
 localfacts
+obsdetc
 remotefacts
