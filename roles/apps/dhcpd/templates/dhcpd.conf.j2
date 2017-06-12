@@ -28,7 +28,7 @@
 #
 # -
 
-option domain-name "lan";
+option domain-name "{{network.domain_name}}";
 option domain-name-servers {{network.router_ip_addr}};
 option broadcast-address {{network.broadcast}};
 

@@ -1,5 +1,10 @@
-add vether0
-add em0
-add em1
-blocknonip vether0
-blocknonip em0
+add {{network.vether_if[0]}}
+{% for ifname in network.lan_if %}
+add {{ifname}}
+{% endfor %}
+blocknonip {{network.vether_if[0]}}
+{% for ifname in network.lan_if %}
+blocknonip {{ifname}}
+{% endfor %}
+up
+

@@ -1,4 +1,5 @@
 ---
-- name: Install (switch) router
-  include: router_switch.yml
-  tags: switch_router
+- name: Install router
+  include: router.yml
+  when: ansible_os_family == "OpenBSD"
+  tags: setup_router
