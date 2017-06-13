@@ -1,0 +1,4 @@
+---
+- include: openbsd.yml
+  when: ansible_os_family == "OpenBSD"
+

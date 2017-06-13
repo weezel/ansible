@@ -1,0 +1,42 @@
+---
+- name: Generate control keys
+  command: unbound-control-setup
+  become: true
+  become_method: doas
+
+- name: Get root.hints file
+  get_url:
+    url: https://www.internic.net/domain/named.cache
+    dest: /var/unbound/etc/root.hints
+    mode: 0644
+  become: true
+  become_method: doas
+
+- name: Get current name servers
+  command: awk '$1 ~ "^nameserver$" {print $2}' /etc/resolv.conf
+  register: nameservers
+
+- name: Store current name servers in variable
+  set_fact:
+    ext_resolvers: "{{nameservers.stdout.split('\n')|default('8.8.8.8')}}"
+
+- name: Copy Unbound configuration
+  template:
+    src: unbound.conf.j2
+    dest: "/var/unbound/etc/unbound.conf"
+    owner: root
+    group: wheel
+    mode: 0640
+  become: true
+  become_method: doas
+
+- name: Enable Unbound
+  command: rcctl enable unbound
+  become: true
+  become_method: doas
+
+- name: Restart Unbound
+  command: rcctl restart unbound
+  become: true
+  become_method: doas
+

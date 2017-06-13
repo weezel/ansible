@@ -1,0 +1,41 @@
+server:
+	interface: {{network.router_ip_addr}}
+	interface: 127.0.0.1
+	access-control: {{network.cidr_addr}} allow
+	do-not-query-localhost: no
+	hide-identity: yes
+	hide-version: yes
+	root-hints: "/var/unbound/etc/root.hints"
+
+	private-domain: "{{network.domain_name}}."
+
+	local-zone: "{{network.subnet.split('.')[0]}}.in-addr.arpa." transparent
+
+{% for h in hosts %}
+	local-data: "{{h.name}}.{{network.domain_name}}		IN A	{{h.ip_addr}}"
+	local-data-ptr: "{{h.ip_addr}}	{{h.name}}.{{network.domain_name}}"
+
+{% endfor %}
+forward-zone:
+	name: "."
+{% for r in ext_resolvers %}
+	forward-addr: {{r}}
+{% endfor %}
+
+forward-zone:
+	name: "{{network.domain_name}}."
+	forward-addr: {{network.router_ip_addr}}
+
+#forward-zone:
+#	name: "192.in-addr.arpa."
+#	forward-addr: 192.168.222.1
+
+remote-control:
+	control-enable: yes
+	control-interface: 127.0.0.1
+	server-key-file: "/var/unbound/etc/unbound_server.key"
+	server-cert-file: "/var/unbound/etc/unbound_server.pem"
+
+	control-key-file: "/var/unbound/etc/unbound_server.key"
+	control-cert-file: "/var/unbound/etc/unbound_server.pem"
+

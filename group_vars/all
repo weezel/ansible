@@ -4,14 +4,13 @@ common:
   router_name: "fw"
 
 hosts:
-  host1:
-    name: "host1"
-    mac: "aa:bb:cc"
-    ip_addr: "1.2.3.4"
-  host2:
-    name: "host2"
-    mac: "dd:ee:ff"
-    ip_addr: "5.6.7.8"
+  - name: "host1"
+    mac: "00:ff:00:ff:00:ff"
+    ip_addr: "192.168.222.10"
+
+  - name: "host2"
+    mac: "ff:00:ff:00:ff:00"
+    ip_addr: "192.168.222.11"
 
 network:
   domain_name: "lan"
@@ -31,9 +30,7 @@ network:
   netmask: "255.255.255.192"
   broadcast: "192.168.222.63"
   cidr_addr: "192.168.222.0/26"
-  router_mac: "aa:bb:cc:dd"
-
-  #ext_resolvers: ["8.8.8.8", {{lookup('pipe', 'grep ^nameserver /etc/resolv.conf |cut -d " " -f 2') | split("\n")}}]
+  router_mac: "aa:bb:cc:dd:ee:ff"
 
 pf:
   uplink_bw: "50 Mbps"
