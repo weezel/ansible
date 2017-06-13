@@ -33,4 +33,12 @@
     - "{{network.vether_if}}"
     - "{{network.pflow_if}}"
   become: true
+  # FIXME doesn't work
+  #  notify:
+  #    - restart network
+  #
+- name: restart network
+  command: sh /etc/netstart
+  become: true
+  become_method: doas
 
