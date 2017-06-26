@@ -2,7 +2,7 @@
 - name: "Get dot config files"
   git:
     repo: "https://github.com/weezel/confs.git"
-    dest: "{{ home_directory }}/configs"
+    dest: "{{ common.home_directory }}/configs"
     clone: yes
     update: yes
   tags:
@@ -11,7 +11,7 @@
 - name: "Get script files"
   git:
     repo: "https://github.com/weezel/scripts.git"
-    dest: "{{ home_directory }}/scripts"
+    dest: "{{ common.home_directory }}/scripts"
     clone: yes
     update: yes
   tags:

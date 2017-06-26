@@ -9,6 +9,7 @@
   with_items:
     - "{{network.lan_if}}"
   become: true
+  become_method: doas
 
 - name: Initialize internet hostname.if files
   template:
@@ -20,6 +21,7 @@
   with_items:
     - "{{network.internet_if}}"
   become: true
+  become_method: doas
 
 - name: Initialize pseudo interface hostname.if files
   template:
@@ -33,10 +35,26 @@
     - "{{network.vether_if}}"
     - "{{network.pflow_if}}"
   become: true
+  become_method: doas
   # FIXME doesn't work
   #  notify:
   #    - restart network
   #
+
+# XXX These should be parameterized
+- name: Adjust sysctl values
+  sysctl:
+    name:  "{{item.name}}"
+    value: "{{item.value}}"
+    state: present
+  with_items:
+    - { name: 'kern.pool_debug', value: 0}
+    - { name: 'machdep.allowaperture', value: 0}
+    - { name: 'net.inet.ip.forwarding', value: 1}
+    - { name: 'net.inet.ip.ifq.maxlen', value: 2048 }
+  become: true
+  become_method: doas
+
 - name: restart network
   command: sh /etc/netstart
   become: true

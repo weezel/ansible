@@ -1,6 +1,11 @@
-home_directory: "/home/vagrant"
+# Only server or desktop, or both? Pondering.
+server: true
+desktop: false
 
 common:
+  username: "weezel"
+  home_directory: "/home/vagrant"
+
   router_name: "fw"
 
 hosts:
