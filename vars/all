@@ -1,8 +1,4 @@
 ---
-# Only server or desktop, or both? Pondering.
-server: true
-desktop: false
-
 common:
   username: "weezel"
   home_directory: "/home/vagrant"
