@@ -25,7 +25,7 @@ match in messages "syslogd: restart" ignore
 match in messages "symux: rrd_update:.*" ignore
 match in messages "symux: rrdupdate -- .*" ignore
 
-match in messages "symux: forked client\\([0-9]*\\) for incoming connection from 192.168.222.[0-9]+:[0-9]*" ignore
+match in messages "symux: forked client\\([0-9]*\\) for incoming connection from {{network.subnet.split('0')[0]}}[0-9]+" ignore
 match in messages "symux: client process [0-9]* exited" ignore
 
 # smartd
@@ -53,8 +53,8 @@ match in { daemon messages } "ntpd\\[[0-9]*\\]: reply from [0-9.]: not synced .*
 #match in messages "identd\\[[0-9]*\\]: Connection from localhost" ignore
 #match in messages "identd\\[[0-9]*\\]: request for .* from localhost" ignore
 #match in messages "identd\\[[0-9]*\\]: Connection from nikita" ignore
-#match in messages "identd\\[[0-9]*\\]: request for .* from nikita" ignore
-#match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : nicholas" ignore
+#match in messages "identd\\[[0-9]*\\]: request for .* from {{common.username}}" ignore
+#match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : {{common.username}}" ignore
 #match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : smmsp" ignore
 #match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : root" ignore
 
@@ -70,7 +70,7 @@ match in daemon "dhcpd\[[0-9]*\]: DHCPREQUEST" ignore
 match in daemon "dhcpd\[[0-9]*\]: already acking lease [0-9.]" ignore
 
 # dhclient
-match in daemon "dhclient\\[[0-9]*\\]: DHCPREQUEST on {{ openbsd.internet_if }}[0-9] to " ignore
+match in daemon "dhclient\\[[0-9]*\\]: DHCPREQUEST on {{network.internet_if}}[0-9] to " ignore
 match in daemon "dhclient\\[[0-9]*\\]: DHCPACK from " ignore
 match in daemon "dhclient\\[[0-9]*\\]: bound to " ignore
 
@@ -96,10 +96,10 @@ match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ mda event=delivery .* result=Ok stat
 #match in auth "sshd\\[\\([0-9]*\\)\\]: Received disconnect from .*" close "sshd-$1" pipe "/usr/bin/mail -s \"`date` ssh attempt\" root"
 
 # normal sshd rules
-match in auth "sshd\\[[0-9]*\\]: Connection closed by 192.168.222.[0-9]+" ignore
-match in auth "sshd\\[[0-9]*\\]: Disconnected from 192.168.222.[0-9]+" ignore
-match in auth "sshd\\[[0-9]*\\]: Accepted publickey for weezel from 192.168.222.[1-9]+ port [0-9]" ignore
-match in auth "sshd\\[[0-9]*\\]: Received disconnect from 192.168.222.[0-9]+ port.*: disconnected by user" ignore
+match in auth "sshd\\[[0-9]*\\]: Connection closed by {{network.subnet.split('0')[0]}}[0-9]+" ignore
+match in auth "sshd\\[[0-9]*\\]: Disconnected from {{network.subnet.split('0')[0]}}[0-9]+" ignore
+match in auth "sshd\\[[0-9]*\\]: Accepted publickey for {{common.username}} from {{network.subnet.split('0')[0]}}[0-9]+ port [0-9]" ignore
+match in auth "sshd\\[[0-9]*\\]: Received disconnect from {{network.subnet.split('0')[0]}}[0-9]+ port.*: disconnected by user" ignore
 
 #match in auth "sshd\\[[0-9]*\\]: Invalid user .* from \\([0-9.]*\\)" exec "grep $1 /etc/pf.ignore || (echo $1 >> /etc/pf.ignore; pfctl -t ignore -T add $1; pfctl -k $1)"
 #match in auth "sshd\\[[0-9]*\\]: scanned from \\([0-9.]*\\) with SSH-1.0-SSH_Version_Mapper.  Don't panic." exec "grep $1 /etc/pf.ignore || (echo $1 >> /etc/pf.ignore; pfctl -t ignore -T add $1; pfctl -k $1)"
@@ -108,12 +108,15 @@ match in auth "sshd\\[[0-9]*\\]: Received disconnect from 192.168.222.[0-9]+ por
 match in mail "fetchmail\\[[0-9]*\\]: .*" ignore
 
 # sudo
-match in secure "sudo:[ \t]*weezel .*" ignore
+match in secure "sudo:[ \t]*{{common.username}} .*" ignore
 match in secure "sudo:[ \t]*root .*" ignore
+
+# doas
+match in secure "doas: {{common.username}} ran command .*" ignore
 
 # sendmail
 match in mail "sm-mta\\[[0-9]*\\]: .*" ignore
 match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: to=root, ctladdr=.*, delay=00:00:0[0-9], xdelay=00:00:0[0-9], mailer=relay, pri=[0-9]*, relay=.*, dsn=2.0.0, stat=Sent .*" ignore
-match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: to=nicholas, ctladdr=.*, delay=00:00:0[0-9], xdelay=00:00:0[0-9], mailer=relay, pri=[0-9]*, relay=.*, dsn=2.0.0, stat=Sent .*" ignore
+match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: to={{common.username}}, ctladdr=.*, delay=00:00:0[0-9], xdelay=00:00:0[0-9], mailer=relay, pri=[0-9]*, relay=.*, dsn=2.0.0, stat=Sent .*" ignore
 match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: from=root, size=[0-9]*, class=[0-9], nrcpts=[0-9], msgid=.*, relay=.*" ignore
-match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: from=nicholas, size=[0-9]*, class=[0-9], nrcpts=[0-9], msgid=.*, relay=.*" ignore
+match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: from={{common.username}}, size=[0-9]*, class=[0-9], nrcpts=[0-9], msgid=.*, relay=.*" ignore
