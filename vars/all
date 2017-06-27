@@ -2,6 +2,13 @@
 server: true
 desktop: false
 
+sysctl: [
+  { name: 'kern.pool_debug', value: 0},
+  { name: 'machdep.allowaperture', value: 0},
+  { name: 'net.inet.ip.forwarding', value: 1},
+  { name: 'net.inet.ip.ifq.maxlen', value: 2048 }
+]
+
 common:
   username: "weezel"
   home_directory: "/home/vagrant"
