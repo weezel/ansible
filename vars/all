@@ -1,13 +1,7 @@
+---
 # Only server or desktop, or both? Pondering.
 server: true
 desktop: false
-
-sysctl: [
-  { name: 'kern.pool_debug', value: 0},
-  { name: 'machdep.allowaperture', value: 0},
-  { name: 'net.inet.ip.forwarding', value: 1},
-  { name: 'net.inet.ip.ifq.maxlen', value: 2048 }
-]
 
 common:
   username: "weezel"
@@ -37,15 +31,21 @@ network:
 
   router_ip_addr: "192.168.222.1"
   router_hostname: "fw"
+  router_mac: "aa:bb:cc:dd:ee:ff"
 
   subnet: "192.168.222.0"
   netmask: "255.255.255.192"
   broadcast: "192.168.222.63"
   cidr_addr: "192.168.222.0/26"
-  router_mac: "aa:bb:cc:dd:ee:ff"
+
+sysctl: [
+  {name: 'kern.pool_debug', value: 0},
+  {name: 'machdep.allowaperture', value: 0},
+  {name: 'net.inet.ip.forwarding', value: 1},
+  {name: 'net.inet.ip.ifq.maxlen', value: 2048}
+]
 
 pf:
   uplink_bw: "50 Mbps"
 
 network_bridge_devs: "{{network.lan_if + network.vether_if}}"
-
