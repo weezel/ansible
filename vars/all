@@ -12,11 +12,11 @@ common:
 hosts:
   - name: "host1"
     mac: "00:ff:00:ff:00:ff"
-    ip_addr: "192.168.222.10"
+    ip_addr: "192.168.222.10 | ipv4"
 
   - name: "host2"
     mac: "ff:00:ff:00:ff:00"
-    ip_addr: "192.168.222.11"
+    ip_addr: "192.168.222.11 | ipv4"
 
 network:
   domain_name: "lan"
@@ -29,14 +29,14 @@ network:
 
   pflow_if: ["pflow0"]
 
-  router_ip_addr: "192.168.222.1"
+  router_ip_addr: "192.168.222.1 | ipv4"
   router_hostname: "fw"
   router_mac: "aa:bb:cc:dd:ee:ff"
 
-  subnet: "192.168.222.0"
-  netmask: "255.255.255.192"
-  broadcast: "192.168.222.63"
-  cidr_addr: "192.168.222.0/26"
+  subnet: "192.168.222.0 | ipv4"
+  netmask: "255.255.255.192 | ipv4"
+  broadcast: "192.168.222.63 | ipv4"
+  cidr_addr: "192.168.222.0/26 | ipv4"
 
 sysctl: [
   {name: 'kern.pool_debug', value: 0},
