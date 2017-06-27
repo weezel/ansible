@@ -1,9 +1,11 @@
 ---
 - hosts: servers
+  vars:
+    - server: true
   roles:
-    - { role: network/router }
-#   - { role: packages, server: true }
-#   - { role: apps/dhcpd }
-#   - { role: apps/unbound }
-#   - { role: apps/pflow }
+    - {role: network/router}
+#    - {role: packages, server: true}
+#    - {role: apps/dhcpd}
+#    - {role: apps/unbound}
+#    - {role: apps/pflow}
 
