@@ -1,5 +1,5 @@
 ---
-- name: "OBSD: Install packages"
+- name: "OBSD: Install common packages"
   openbsd_pkg:
     name: "{{ item }}"
     state: latest
@@ -7,13 +7,10 @@
     - bwm-ng
     - curl
     - git
-    - mtr
+    - mtr--
     - nload
     - nmap
-    - ntpdate
     - rsync
-    - tcpdump
-    - vim-common
     - ggrep
     - iftop
     - logfmon
@@ -21,9 +18,36 @@
     - pkglocatedb
     - vnstat
     - sysclean
-  become_user: root
-  become_method: doas
   become: true
+  become_method: doas
   tags:
-    - packages
+    - packages_common
+
+- name: "OBSD: Install desktop packages"
+  openbsd_pkg:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - kdiff3
+    - vim--gtk2-perl-python3-ruby
+  become: true
+  become_method: doas
+  when: not server_install | bool
+  tags:
+    - packages_desktop
+
+- name: "OBSD: Install server packages"
+  openbsd_pkg:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - nfsen
+    - nginx
+    - php--5.6
+    - vim--no_x11-perl-python3-ruby
+  become: true
+  become_method: doas
+  when: server_install | bool
+  tags:
+    - packages_server
 
