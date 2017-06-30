@@ -1,0 +1,56 @@
+---
+- name: Upload and restart nfsen
+  copy:
+    src: nfsen_openbsd.conf
+    dest: /etc/nfsen.conf
+    owner: root
+    group: wheel
+    mode: 0660
+  become: true
+  become_method: doas
+
+- name: Create chroot dir for nfsen
+  file:
+    path: /var/www/var/db
+    owner: _nfcapd
+    group: www
+    mode: 0755
+    state: directory
+  register: created_dir
+  become: true
+  become_method: doas
+
+- name: Move old nfsen files to chroot
+  command: mv /var/db/nfsen /var/www/var/db/nfsen
+  when: created_dir.changed
+  become: true
+  become_method: doas
+
+- name: Create a soft link from old to new place
+  file:
+    src: /var/www/var/db/nfsen
+    path: /var/db/nfsen
+    force: yes
+    state: link
+  become: true
+  become_method: doas
+
+- name: Initialize nfsen db
+  command: install-nfsen.pl /etc/nfsen.conf
+  notify:
+    - restart nfsen
+  become: true
+  become_method: doas
+
+- name: Start nfsen
+  service:
+    name: nfsen
+    state: restarted
+  become: true
+  become_method: doas
+
+- name: Enable nfsen
+  command: "rcctl enable nfsen"
+  become: true
+  become_method: doas
+
