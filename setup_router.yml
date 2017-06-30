@@ -1,11 +1,13 @@
 ---
 - hosts: servers
+  vars_files:
+    - vars/all
   vars:
     - server_install: true
   roles:
-    - {role: network/router}
-#    - {role: packages, server: true}
+#    - {role: default_packages}
+#    - {role: network/router}
 #    - {role: apps/dhcpd}
 #    - {role: apps/unbound}
-#    - {role: apps/pflow}
+    - {role: 'apps/nfsen', tags: ['nfsen']}
 
