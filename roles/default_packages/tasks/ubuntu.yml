@@ -1,16 +1,29 @@
 ---
-- name: "UBUNTU: No suggested nor recommended packages"
-  copy:
-    src: apt.conf
+- name: No suggested packages
+  lineinfile:
     dest: /etc/apt/apt.conf
+    regexp: '^APT::Install-Suggests'
+    line: 'APT::Install-Suggests "0";'
     owner: root
     group: root
     mode: 0644
   become: true
   tags:
-    - packages
+    - apt_conf
 
-- name: "UBUNTU: Install packages"
+- name: No recommended packages
+  lineinfile:
+    dest: /etc/apt/apt.conf
+    regexp: '^APT::Install-Recommends'
+    line: 'APT::Install-Recommends"0";'
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  tags:
+    - apt_conf
+
+- name: Install packages
   apt:
     name: "{{ item }}"
     state: latest
