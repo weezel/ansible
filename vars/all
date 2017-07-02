@@ -5,7 +5,7 @@ common:
 
   router_name: "fw"
 
-hosts:
+static_hosts:
   - name: "host1"
     mac: "00:ff:00:ff:00:ff"
     ip_addr: "192.168.222.10 | ipv4"
@@ -34,6 +34,8 @@ network:
   broadcast: "192.168.222.63 | ipv4"
   cidr_addr: "192.168.222.0/26 | ipv4"
 
+network_bridge_devs: "{{network.lan_if + network.vether_if}}"
+
 sysctl: [
   {name: 'kern.pool_debug', value: 0},
   {name: 'machdep.allowaperture', value: 0},
@@ -44,4 +46,63 @@ sysctl: [
 pf:
   uplink_bw: "50 Mbps"
 
-network_bridge_devs: "{{network.lan_if + network.vether_if}}"
+packages:
+  common: [
+    'bwm-ng',
+    'curl',
+    'git',
+    'iftop',
+    'logfmon',
+    'ncdu',
+    'nload',
+    'nmap',
+    'rsync'
+  ]
+
+  centos: [
+    'dstat',
+    'mtr',
+    'nmap',
+    'ntpdate',
+    'openssh-server',
+    'policycoreutils-python',
+    'rsync',
+    'strace',
+    'tcpdump',
+    'tmux',
+    'vim-common',
+    'which',
+    'whois'
+  ]
+
+  ubuntu: [
+    'dstat',
+    'mtr',
+    'nmap',
+    'ntpdate',
+    'openssh-server',
+    'policycoreutils',
+    'strace',
+    'tcpdump',
+    'tmux',
+    'vim-common',
+    'whois'
+  ]
+
+  obsd_common: [
+    'ggrep',
+    'lynx',
+    'mtr--',
+    'pkglocatedb',
+    'sysclean'
+  ]
+
+  obsd_desktop: [
+    'kdiff3',
+    'vim--gtk2-perl-python3-ruby'
+  ]
+
+  obsd_server: [
+    'vnstat',
+    'vim--no_x11-perl-python3-ruby'
+  ]

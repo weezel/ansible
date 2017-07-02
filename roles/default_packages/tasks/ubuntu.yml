@@ -25,28 +25,11 @@
 
 - name: Install packages
   apt:
-    name: "{{ item }}"
+    name: "{{item}}"
     state: latest
     update_cache: yes
   with_items:
-    - bwm-ng
-    - curl
-    - dstat
-    - git
-    - mtr
-    - ncdu
-    - nload
-    - nmap
-    - ntpdate
-    - openssh-server
-    - policycoreutils
-    - rsync
-    - strace
-    - tcpdump
-    - tmux
-    - vim-common
-    - whois
+    - "{{packages.common + packages.ubuntu}}"
   become: true
   tags:
     - packages
-

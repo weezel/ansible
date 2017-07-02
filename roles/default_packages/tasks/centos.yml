@@ -11,27 +11,10 @@
 
 - name: "CENTOS: Install packages"
   yum:
-    name: "{{ item }}"
+    name: "{{item}}"
     state: latest
   with_items:
-    - bwm-ng
-    - curl
-    - dstat
-    - git
-    - mtr
-    - ncdu
-    - nload
-    - nmap
-    - ntpdate
-    - openssh-server
-    - policycoreutils-python
-    - rsync
-    - strace
-    - tcpdump
-    - tmux
-    - vim-common
-    - which
-    - whois
+    - "{{packages.common + packages.centos}}"
   become_user: root
   become: true
   tags:
