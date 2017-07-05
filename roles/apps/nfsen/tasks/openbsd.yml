@@ -1,4 +1,11 @@
 ---
+- name: Install nfsen
+  package:
+    name: nfsen
+    state: latest
+  become: true
+  become_method: doas
+
 - name: Upload and restart nfsen
   copy:
     src: nfsen_openbsd.conf
