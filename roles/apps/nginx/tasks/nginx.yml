@@ -1,0 +1,40 @@
+---
+- name: "Create directories sites-{available,enabled} for {{ansible_system}}"
+  file:
+    path: "/etc/nginx/{{item}}"
+    owner: root
+    group: "{{nginx_etc_dir_group}}"
+    mode: 0755
+    state: directory
+  become: true
+  with_items:
+    - sites-available
+    - sites-enabled
+    - certs
+  tags:
+    - sites_directories
+
+- name: Copy configuration files over
+  template:
+    src: "{{item.src}}"
+    dest: "{{item.dst}}"
+    owner: root
+    group: "{{nginx_etc_dir_group}}"
+  with_items:
+    - {src: "nginx.conf.j2", dst: "/etc/nginx/nginx.conf"}
+    - {src: "site.conf.j2", dst: "/etc/nginx/sites-available/site.conf"}
+  become: true
+
+- name: Enable nginx
+  service:
+    name: nginx
+    enabled: yes
+  become: true
+
+- name: Generate DH parameters if it doesn't exist
+  command: openssl dhparam -out /etc/ssl/dhparam.pem 4096
+  args:
+    creates: /etc/ssl/dhparam.pem
+  notify:
+    - Restart nginx
+  become: true

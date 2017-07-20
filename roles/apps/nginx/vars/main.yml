@@ -1,0 +1,7 @@
+---
+nginx_user: "nginx"
+nginx_group: "nginx"
+nginx_etc_dir_group: "root"
+nginx_worker_connections: 1024
+nginx_worker_processes: "{{ansible_processor_vcpus | default(1)}}"
+site_name: "example.com"

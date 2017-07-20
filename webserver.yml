@@ -1,0 +1,7 @@
+---
+- hosts: servers
+  roles:
+    - {role: apps/nginx, site_name="weezels_site"}
+#    - {role: apps/php}
+#    - {role: apps/mariadb}
+#    - {role: apps/postgresql}
