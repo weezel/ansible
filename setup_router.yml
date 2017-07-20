@@ -9,5 +9,4 @@
 #    - {role: network/router}
 #    - {role: apps/dhcpd}
 #    - {role: apps/unbound}
-    - {role: 'apps/nfsen', tags: ['nfsen']}
-
+    - {role: apps/nfsen}
