@@ -1,4 +1,6 @@
 ---
+server_install: true
+
 common:
   username: "weezel"
   home_directory: "/home/vagrant"
