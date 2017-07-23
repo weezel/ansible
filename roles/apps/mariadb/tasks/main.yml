@@ -1,0 +1,43 @@
+---
+- name: "Install MariaDB ({{ansible_system}})"
+  package:
+    name: "{{item}}"
+    state: latest
+  with_items:
+    - mariadb
+    - mariadb-server
+  become: true
+  when: ansible_system == "Linux"
+  tags:
+    - install_mariadb
+
+- name: "Install MariaDB ({{ansible_system}})"
+  openbsd_pkg:
+    name: "{{item}}"
+    state: latest
+  with_items:
+    - mariadb-server
+    - mariadb-client
+  become: true
+  become_method: doas
+  when: ansible_system == "OpenBSD"
+  tags:
+    - install_mariadb
+
+- include: mariadb.yml
+  when: ansible_system == "Linux"
+  tags:
+    - mariadb_configure
+
+- include: >
+    mariadb.yml
+    mariadb_user=_mysql
+    mariadb_group=_mysql
+    mariadb_etc_group=wheel
+    mariadb_sock_dir=/var/run/mysql
+    mariadb_base_dir=/var/mariadb
+    mariadb_service_name=mysqld
+  become_method: doas
+  when: ansible_system == "OpenBSD"
+  tags:
+    - mariadb_configure

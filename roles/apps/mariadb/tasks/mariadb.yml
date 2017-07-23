@@ -1,0 +1,39 @@
+---
+- name: "Create a socket directory ({{ansible_system}})"
+  file:
+    path: "{{item}}"
+    owner: "{{mariadb_user}}"
+    group: "{{mariadb_group}}"
+    mode: 0711
+    state: directory
+  with_items:
+    - "{{mariadb_base_dir}}"
+    - "{{mariadb_base_dir}}/binlog"
+    - "{{mariadb_base_dir}}/tmp"
+    - "{{mariadb_log_dir}}"
+    - "{{mariadb_sock_dir}}"
+
+  become: true
+  tags:
+    - sites_directories
+
+- name: "Copy configuration files over ({{ansible_system}})"
+  template:
+    src: "my.cnf.j2"
+    dest: "/etc/my.cnf"
+    owner: root
+    group: "{{mariadb_etc_group}}"
+  become: true
+
+- name: "Enable and start MariaDB  ({{ansible_system}})"
+  service:
+    name: "{{mariadb_service_name}}"
+    enabled: yes
+  become: true
+#  notify:
+#    - Restart mariadb
+
+- debug:
+    msg: >
+      "Remember to run mysql_install_db or
+      equivalent before starting to use mysqld"

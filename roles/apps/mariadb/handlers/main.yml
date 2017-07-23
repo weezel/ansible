@@ -1,0 +1,6 @@
+---
+- name: Restart mariadb
+  service:
+    name: "{{mariadb_service_name}}"
+    state: restarted
+  become: true
