@@ -3,7 +3,6 @@ server_install: true
 
 common:
   username: "weezel"
-  home_directory: "/home/vagrant"
 
   router_name: "fw"
 
@@ -32,9 +31,9 @@ network:
   router_mac: "aa:bb:cc:dd:ee:ff"
 
   subnet: "192.168.222.0 | ipv4"
-  netmask: "255.255.255.192 | ipv4"
-  broadcast: "192.168.222.63 | ipv4"
-  cidr_addr: "192.168.222.0/26 | ipv4"
+  netmask: "255.255.255.0 | ipv4"
+  broadcast: "192.168.222.255 | ipv4"
+  cidr_addr: "192.168.222.0/24 | ipv4"
 
 network_bridge_devs: "{{network.lan_if + network.vether_if}}"
 
