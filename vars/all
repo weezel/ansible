@@ -9,11 +9,11 @@ common:
 static_hosts:
   - name: "host1"
     mac: "00:ff:00:ff:00:ff"
-    ip_addr: "192.168.222.10 | ipv4"
+    ip_addr: "192.168.10.10"
 
   - name: "host2"
     mac: "ff:00:ff:00:ff:00"
-    ip_addr: "192.168.222.11 | ipv4"
+    ip_addr: "192.168.10.11"
 
 network:
   domain_name: "lan"
@@ -26,14 +26,14 @@ network:
 
   pflow_if: ["pflow0"]
 
-  router_ip_addr: "192.168.222.1 | ipv4"
+  router_ip_addr: "192.168.10.1"
   router_hostname: "fw"
   router_mac: "aa:bb:cc:dd:ee:ff"
 
-  subnet: "192.168.222.0 | ipv4"
-  netmask: "255.255.255.0 | ipv4"
-  broadcast: "192.168.222.255 | ipv4"
-  cidr_addr: "192.168.222.0/24 | ipv4"
+  subnet: "192.168.10.0"
+  netmask: "255.255.255.0"
+  broadcast: "192.168.10.255"
+  cidr_addr: "192.168.10.0/24"
 
 network_bridge_devs: "{{network.lan_if + network.vether_if}}"
 
