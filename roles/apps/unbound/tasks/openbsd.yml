@@ -35,8 +35,9 @@
   become: true
   become_method: doas
 
-- name: Restart Unbound
-  command: rcctl restart unbound
-  become: true
-  become_method: doas
+# XXX Cannot enable before network configuration has been copmleted
+  #- name: Restart Unbound
+  #  command: rcctl restart unbound
+  #  become: true
+  #  become_method: doas
 

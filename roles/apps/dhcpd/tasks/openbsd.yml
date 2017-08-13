@@ -28,13 +28,14 @@
   tags:
     - dhcpd
 
-- name: Restart dhcpd
-  service:
-    name: dhcpd
-    state: restarted
-  become: true
-  become_method: doas
-  tags:
-    - dhcpd
+# XXX Cannot enable before network configuration has been copmleted
+  #- name: Restart dhcpd
+  #  service:
+  #    name: dhcpd
+  #    state: restarted
+  #  become: true
+  #  become_method: doas
+  #  tags:
+  #    - dhcpd
 
 
