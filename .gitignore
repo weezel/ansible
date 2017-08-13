@@ -1,7 +1,9 @@
 *.o
 *.pyc
+*.retry
 .vagrant
 Vagrantfile
 localfacts
+obsdetc
 obsdetc
 remotefacts

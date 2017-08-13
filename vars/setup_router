@@ -1,22 +1,12 @@
 ---
 server_install: true
+ip_stub: "192.168.10."
 
 common:
-  username: "weezel"
-
-  router_name: "fw"
-
-static_hosts:
-  - name: "host1"
-    mac: "00:ff:00:ff:00:ff"
-    ip_addr: "192.168.10.10"
-
-  - name: "host2"
-    mac: "ff:00:ff:00:ff:00"
-    ip_addr: "192.168.10.11"
+  username: "vagrant"
 
 network:
-  domain_name: "lan"
+  domain_name: "myhome.lan"
 
   internet_if: ["re0"]
   lan_if: ["re1", "re2"]
@@ -26,22 +16,34 @@ network:
 
   pflow_if: ["pflow0"]
 
-  router_ip_addr: "192.168.10.1"
+  router_name: "fw"
+  router_ip_addr: "{{ip_stub + '1'}}"
   router_hostname: "fw"
   router_mac: "aa:bb:cc:dd:ee:ff"
+  dhcpd_range_start: "{{ip_stub + '50'}}"
+  dhcpd_range_end: "{{ip_stub + '250'}}"
 
-  subnet: "192.168.10.0"
+  subnet: "{{ip_stub + '0'}}"
   netmask: "255.255.255.0"
-  broadcast: "192.168.10.255"
-  cidr_addr: "192.168.10.0/24"
+  broadcast: "{{ip_stub + '255'}}"
+  cidr_addr: "{{ip_stub + '0/24'}}"
 
 network_bridge_devs: "{{network.lan_if + network.vether_if}}"
+
+static_hosts:
+  - name: "{{network.router_name}}"
+    mac: "{{network.router_mac}}"
+    ip_addr: "{{network.router_ip_addr}}"
+
+  - name: "host1"
+    mac: "ff:00:ff:00:ff:00"
+    ip_addr: "{{ip_stub + '11'}}"
 
 sysctl: [
   {name: 'kern.pool_debug', value: 0},
   {name: 'machdep.allowaperture', value: 0},
   {name: 'net.inet.ip.forwarding', value: 1},
-  {name: 'net.inet.ip.ifq.maxlen', value: 2048}
+  {name: 'net.inet.ip.ifq.maxlen', value: 4096}
 ]
 
 pf:

@@ -1,12 +1,19 @@
 ---
-- hosts: servers
+# Needed pre-steps
+# 1. Configure doas.conf
+# 2. Configure installurl
+# 3. Install python 2.7 on the target machine
+
+- hosts: all
   vars_files:
-    - vars/all
+    - vars/setup_router
   vars:
     - server_install: true
   roles:
-#    - {role: default_packages}
-#    - {role: network/router}
-#    - {role: apps/dhcpd}
-#    - {role: apps/unbound}
+    - {role: default_packages}
+    - {role: dotconfigs}
+    - {role: network/router}
+    - {role: apps/dhcpd}
+    - {role: apps/unbound}
     - {role: apps/nfsen}
+    - {role: network/firewall}

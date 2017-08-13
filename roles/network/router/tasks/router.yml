@@ -52,8 +52,8 @@
   become: true
   become_method: doas
 
-- name: restart network
-  command: sh /etc/netstart
-  become: true
-  become_method: doas
+  #- name: restart network
+  #  command: sh /etc/netstart
+  #  become: true
+  #  become_method: doas
 
