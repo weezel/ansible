@@ -49,6 +49,11 @@
   become: true
   become_method: doas
 
+- name: Enable nfsen
+  command: "rcctl enable nfsen"
+  become: true
+  become_method: doas
+
 - name: Start nfsen
   service:
     name: nfsen
@@ -56,8 +61,4 @@
   become: true
   become_method: doas
 
-- name: Enable nfsen
-  command: "rcctl enable nfsen"
-  become: true
-  become_method: doas
 
