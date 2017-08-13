@@ -4,3 +4,4 @@
 
 - include: pf.yml
   when: ansible_os_family == "OpenBSD"
+  become_method: doas

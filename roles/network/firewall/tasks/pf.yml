@@ -6,8 +6,9 @@
     owner: root
     group: wheel
     mode: 0664
+  become: true
 
-- name: Copy pf.conf over
+- name: Copy pf.conf template over
   template:
     src: pf.conf.j2
     dest: /etc/pf.conf
@@ -15,4 +16,5 @@
     group: wheel
     mode: 0600
     validate: pfctl -nf %s
+  become: true
 

@@ -1,0 +1,130 @@
+LAN      = "{ vether0 {{network.lan_if | join(' ')}} }"
+INTERNET = "{{network.internet_if[0]}}"
+
+TCPSTATE="modulate state"
+UDPSTATE="keep state"
+
+table <martians> { 0.0.0.0/8 10.0.0.0/8 127.0.0.0/8 169.254.0.0/16      \
+                    172.16.0.0/12 192.0.0.0/24 192.0.2.0/24 224.0.0.0/3 \
+                    198.18.0.0/15 198.51.100.0/24 203.0.113.0/24 }
+table <blacklist> persist file "/etc/blacklist.ips"
+#set limit states 100000
+set limit states 50000
+set skip on lo
+set block-policy drop
+set state-defaults pflow
+set loginterface egress
+
+#antispoof for { lo0, $INTERNET, vlan100 }
+antispoof for { lo0, $INTERNET }
+antispoof for $LAN
+
+queue rootq on $INTERNET bandwidth {{pf.uplink_bw}}MB max {{pf.uplink_bw}}MB
+	queue std parent rootq bandwidth 4M default
+	queue hipriq parent rootq bandwidth 1M min 0.5M
+	queue http parent rootq bandwidth 2M burst 8M for 3000ms
+	queue ssh parent rootq bandwidth 2M
+		queue ssh_interactive parent ssh bandwidth 1M min 0.5M
+		queue ssh_bulk        parent ssh bandwidth 1M
+
+############ <NAT AND NORMALIZE> ############
+match in all scrub (no-df random-id max-mss 1440)
+match out on egress inet from !(egress:network) to any nat-to (egress:0)
+
+# VLAN100
+#match out on egress inet from vlan100:network to any nat-to (egress:0)
+############ </NAT AND NORMALIZE> ############
+
+block log quick from <blacklist>
+block in log quick on egress from <martians> to any
+# XXX VPN needs some widening in here
+block return out quick on egress from any to <martians> set queue std
+block quick inet6
+block log all
+
+############ <WIRELESS-LAB VLAN100> ############
+#pass out log quick on vlan100 inet proto tcp \
+#	from vlan100:network to any port { http, https } \
+#	$TCPSTATE \
+#	(pflow) \
+#	set queue http
+#pass log quick on vlan100 inet proto {tcp, udp, icmp} \
+#	from vlan100:network to any \
+#	$TCPSTATE \
+#	(pflow) \
+#	set queue std
+
+#XXX block in log quick on vlan100 from vlan100 to any
+############ </WIRELESS-LAB VLAN100> ############
+
+############ <GENERAL: OUT> ############
+pass out log quick on egress inet proto {tcp, udp} \
+	from any to any port domain \
+	$TCPSTATE \
+	(pflow) \
+	set queue hipriq
+pass out log quick on egress inet proto tcp \
+	from any to any port ssh \
+	$TCPSTATE \
+	(pflow) \
+	set queue (ssh_bulk, ssh_interactive)
+pass out log quick on egress inet proto tcp \
+	from any to any port {http, https} \
+	$TCPSTATE \
+	set queue http
+pass out log quick on egress inet proto tcp \
+	from any to any port {http, https} \
+	$TCPSTATE \
+	(pflow) \
+	set queue http
+
+pass out log quick on egress inet \
+	$TCPSTATE \
+	(pflow) \
+	set queue std
+############ </GENERAL: OUT> ############
+
+############ <LAN> ############
+pass log on $LAN inet from any to any \
+	$TCPSTATE \
+	(pflow)
+
+pass in log on $LAN inet proto tcp from any to vether0 \
+	port ssh \
+	$TCPSTATE \
+	(pflow)
+# http
+pass in log on $LAN inet proto tcp from any to vether0 \
+	port http \
+	$TCPSTATE \
+	(pflow)
+# pflow
+#pass in log on $LAN inet proto udp from 192.168.222.2 to vether0 \
+#        port 9995 rdr-to 127.0.0.1 port 9995 $UDPSTATE
+############ </LAN> ############
+
+############ <INTERNET> ############
+# Internet -> fw ssh
+#pass in log on $INTERNET inet proto tcp from any to $INTERNET \
+#        port 20022 rdr-to $INTERNET port 22 $TCPSTATE
+
+# Allow ping
+pass log on $INTERNET inet proto icmp all icmp-type 8 code 0 \
+	set queue std
+
+# Allow HTTP in
+pass in log on $INTERNET inet proto tcp from any to ($INTERNET) \
+	port https \
+	$TCPSTATE \
+	(pflow, \
+	 max-src-conn-rate 50/5, overload <blacklist> flush global)
+
+# Internet -> SSH -> severi
+pass in log on $INTERNET inet proto tcp from any to ($INTERNET) \
+        port 10022 rdr-to severi.lan port ssh \
+        $TCPSTATE \
+        (pflow, \
+         max-src-conn-rate 5/120, overload <blacklist> flush global)
+############ </INTERNET> ############
+#pass in on egress inet proto tcp from any to (egress) port { 80 443 } rdr-to 192.168.1.2
+
