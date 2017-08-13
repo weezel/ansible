@@ -16,25 +16,22 @@ network:
 
   pflow_if: ["pflow0"]
 
-  router_name: "fw"
-  router_ip_addr: "{{ip_stub + '1'}}"
   router_hostname: "fw"
+  router_ip_addr: "{{ip_stub + '1'}}"
   router_mac: "aa:bb:cc:dd:ee:ff"
-  dhcpd_range_start: "{{ip_stub + '50'}}"
-  dhcpd_range_end: "{{ip_stub + '250'}}"
 
   subnet: "{{ip_stub + '0'}}"
   netmask: "255.255.255.0"
   broadcast: "{{ip_stub + '255'}}"
   cidr_addr: "{{ip_stub + '0/24'}}"
 
+  dhcpd_range_start: "{{ip_stub + '50'}}"
+  dhcpd_range_end: "{{ip_stub + '250'}}"
+
+
 network_bridge_devs: "{{network.lan_if + network.vether_if}}"
 
 static_hosts:
-  - name: "{{network.router_name}}"
-    mac: "{{network.router_mac}}"
-    ip_addr: "{{network.router_ip_addr}}"
-
   - name: "host1"
     mac: "ff:00:ff:00:ff:00"
     ip_addr: "{{ip_stub + '11'}}"

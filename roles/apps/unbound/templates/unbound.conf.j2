@@ -11,6 +11,9 @@ server:
 
 	local-zone: "{{network.subnet.split('.')[0]}}.in-addr.arpa." transparent
 
+	local-data: "{{network.router_hostname}}.{{network.domain_name}}		IN A	{{network.router_ip_addr}}"
+	local-data-ptr: "{{network.router_ip_addr}}	{{network.router_hostname}}.{{network.domain_name}}"
+
 {% for h in static_hosts %}
 	local-data: "{{h.name}}.{{network.domain_name}}		IN A	{{h.ip_addr}}"
 	local-data-ptr: "{{h.ip_addr}}	{{h.name}}.{{network.domain_name}}"
