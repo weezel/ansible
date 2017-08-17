@@ -5,8 +5,8 @@
 # 3. Install python 2.7 on the target machine
 
 - hosts: all
-  vars_files:
-    - vars/setup_router
+  #vars_files:
+  #  - defaults/setup_router
   vars:
     - server_install: true
   roles:
