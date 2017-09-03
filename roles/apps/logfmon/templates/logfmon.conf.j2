@@ -70,7 +70,7 @@ match in daemon "dhcpd\[[0-9]*\]: DHCPREQUEST" ignore
 match in daemon "dhcpd\[[0-9]*\]: already acking lease [0-9.]" ignore
 
 # dhclient
-match in daemon "dhclient\\[[0-9]*\\]: DHCPREQUEST on {{network.internet_if}}[0-9] to " ignore
+match in daemon "dhclient\\[[0-9]*\\]: DHCPREQUEST on {{network.internet_if}}[0-9.]+ to " ignore
 match in daemon "dhclient\\[[0-9]*\\]: DHCPACK from " ignore
 match in daemon "dhclient\\[[0-9]*\\]: bound to " ignore
 
@@ -95,10 +95,11 @@ match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ mda event=delivery .* result=Ok stat
 #match in auth "sshd\\[\\([0-9]*\\)\\]: .*" append "sshd-$1"
 #match in auth "sshd\\[\\([0-9]*\\)\\]: Received disconnect from .*" close "sshd-$1" pipe "/usr/bin/mail -s \"`date` ssh attempt\" root"
 
-# normal sshd rules
+# Normal sshd rules
+match in auth "sshd\\[[0-9]*\\]: Accepted publickey for {{common.username}} from {{network.subnet.split('0')[0]}}[0-9]+ port [0-9]" ignore
 match in auth "sshd\\[[0-9]*\\]: Connection closed by {{network.subnet.split('0')[0]}}[0-9]+" ignore
 match in auth "sshd\\[[0-9]*\\]: Disconnected from {{network.subnet.split('0')[0]}}[0-9]+" ignore
-match in auth "sshd\\[[0-9]*\\]: Accepted publickey for {{common.username}} from {{network.subnet.split('0')[0]}}[0-9]+ port [0-9]" ignore
+match in auth "sshd\\[[0-9]*\\]: Failed password for {{common.username}} from {{network.subnet.split('0')[0]}}[0-9]+ port [0-9]" ignore
 match in auth "sshd\\[[0-9]*\\]: Received disconnect from {{network.subnet.split('0')[0]}}[0-9]+ port.*: disconnected by user" ignore
 
 #match in auth "sshd\\[[0-9]*\\]: Invalid user .* from \\([0-9.]*\\)" exec "grep $1 /etc/pf.ignore || (echo $1 >> /etc/pf.ignore; pfctl -t ignore -T add $1; pfctl -k $1)"
