@@ -20,6 +20,7 @@ match in messages "logfmon: started" ignore
 
 # syslogd
 match in messages "syslogd: restart" ignore
+match in messages "syslogd\\[[0-9]+\\]: restart" ignore
 
 # symon
 match in messages "symux: rrd_update:.*" ignore
