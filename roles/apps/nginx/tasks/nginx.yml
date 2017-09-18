@@ -35,6 +35,11 @@
   command: openssl dhparam -out /etc/ssl/dhparam.pem 4096
   args:
     creates: /etc/ssl/dhparam.pem
-  #notify:
-  #  - Restart nginx
+  become: true
+
+- name: Enable nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
   become: true
