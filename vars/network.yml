@@ -1,0 +1,32 @@
+---
+ip_stub: "192.168.222."
+
+network:
+  domain_name: "severi.lan"
+
+  internet_if: ["re0"]
+  lan_if: ["re1", "re2"]
+
+  bridge_if: ["bridge0"]
+  vether_if: ["vether0"]
+
+  pflow_if: ["pflow0"]
+
+  router_hostname: "fw"
+  router_ip_addr: "{{ip_stub + '1'}}"
+  router_mac: "aa:bb:cc:dd:ee:ff"
+
+  subnet: "{{ip_stub + '0'}}"
+  netmask: "255.255.255.0"
+  broadcast: "{{ip_stub + '255'}}"
+  cidr_addr: "{{ip_stub + '0/24'}}"
+
+  dhcpd_range_start: "{{ip_stub + '50'}}"
+  dhcpd_range_end: "{{ip_stub + '250'}}"
+
+network_bridge_devs: "{{network.lan_if + network.vether_if}}"
+
+static_hosts:
+  - name: "host1"
+    mac: "ff:00:ff:00:ff:00"
+    ip_addr: "{{ip_stub + '11'}}"

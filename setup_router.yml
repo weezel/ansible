@@ -5,10 +5,18 @@
 # 3. Install python 2.7 on the target machine
 
 - hosts: all
-  #vars_files:
-  #  - defaults/setup_router
+  vars_files:
+    - vars/network.yml
+    - vars/packages.yml
+    - vars/openbsd.yml
   vars:
     - server_install: true
+    - ip_stub: "192.168.10."
+    - common:
+        - username: "weezel"
+    - network:
+        - domain_name: "my.home.lan"
+
   roles:
     - {role: default_packages}
     - {role: dotconfigs}

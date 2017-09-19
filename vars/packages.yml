@@ -1,0 +1,61 @@
+---
+packages:
+  common: [
+    'bwm-ng',
+    'curl',
+    'git',
+    'iftop',
+    'ncdu',
+    'nload',
+    'nmap',
+    'rsync'
+  ]
+
+  centos: [
+    'dstat',
+    'mtr',
+    'nmap',
+    'ntpdate',
+    'openssh-server',
+    'policycoreutils-python',
+    'rsync',
+    'strace',
+    'tcpdump',
+    'tmux',
+    'vim-common',
+    'which',
+    'whois'
+  ]
+
+  ubuntu: [
+    'dstat',
+    'mtr',
+    'nmap',
+    'ntpdate',
+    'openssh-server',
+    'policycoreutils',
+    'strace',
+    'tcpdump',
+    'tmux',
+    'vim-common',
+    'whois'
+  ]
+
+  obsd_common: [
+    'ggrep',
+    'lynx',
+    'mtr--',
+    'pkglocatedb',
+    'sysclean'
+  ]
+
+  obsd_desktop: [
+    'kdiff3',
+    'vim--gtk2-perl-python3-ruby'
+  ]
+
+  obsd_server: [
+    'logfmon',
+    'vnstat',
+    'vim--no_x11-perl-python3-ruby'
+  ]
