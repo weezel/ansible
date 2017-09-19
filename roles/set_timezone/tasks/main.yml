@@ -1,0 +1,13 @@
+---
+- name: "Set timezone {{tzone}}"
+  timezone:
+    name: "{{tzone}}"
+  become: true
+  when: ansible_system == "Linux"
+
+- name: "Set timezone to {{tzone}}"
+  timezone:
+    name: "{{tzone}}"
+  become_method: doas
+  become: true
+  when: ansible_system == "OpenBSD"

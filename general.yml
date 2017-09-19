@@ -1,0 +1,13 @@
+---
+- hosts: all
+  vars_files:
+    - vars/packages.yml
+  vars:
+    - server_install: true
+    - common:
+        - username: "weezel"
+
+  roles:
+    - {role: set_timezone}
+    - {role: default_packages}
+    - {role: dotconfigs}
