@@ -1,6 +1,7 @@
 ---
 - hosts: all
   vars:
+    # self-signed or letsencrypt
     - nginx_cert_type: "self-signed"
     - nginx_uwsgi: false
 #   - nginx_reverse_proxy: true
@@ -9,5 +10,3 @@
   roles:
     - {role: apps/nginx}
 #    - {role: apps/php}
-#- {role: apps/mariadb}
-#    - {role: apps/postgresql}
