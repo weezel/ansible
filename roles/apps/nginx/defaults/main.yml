@@ -2,6 +2,18 @@
 nginx_user: "nginx"
 nginx_group: "nginx"
 nginx_etc_dir_group: "root"
+nginx_reverse_proxy: true
+nginx_uwsgi: false
 nginx_worker_connections: 1024
 nginx_worker_processes: "{{ansible_processor_vcpus | default(1)}}"
 site_name: "example.com"
+
+ssl:
+  country: "FI"
+  state: "State"
+  locality: "City"
+  organization: "-"
+  common_name: "{{site_name}}"
+  days_valid: 3650
+
+ssl_cert_fields: "/C={{ssl.country}}/ST={{ssl.state}}/L={{ssl.locality}}/O={{ssl.organization}}/CN={{ssl.common_name}}"

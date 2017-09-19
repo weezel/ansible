@@ -1,7 +1,13 @@
 ---
-- hosts: servers
+- hosts: all
+  vars:
+    - nginx_cert_type: "self-signed"
+    - nginx_uwsgi: false
+#   - nginx_reverse_proxy: true
+    - site_name: "coolsites.lan.local"
+
   roles:
-#    - {role: apps/nginx, site_name="weezels_site"}
+    - {role: apps/nginx}
 #    - {role: apps/php}
-    - {role: apps/mariadb}
+#- {role: apps/mariadb}
 #    - {role: apps/postgresql}

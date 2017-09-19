@@ -6,6 +6,9 @@
   become: true
   when: ansible_system == "Linux"
 
+- include: nginx.yml
+  when: ansible_system == "Linux"
+
 - name: Install nginx for OpenBSD
   package:
     name: nginx--
@@ -13,9 +16,6 @@
   become: true
   become_method: doas
   when: ansible_system == "OpenBSD"
-
-- include: nginx.yml
-  when: ansible_system == "Linux"
 
 - include: nginx.yml nginx_user=www nginx_group=www nginx_etc_dir_group=wheel
   become_method: doas

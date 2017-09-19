@@ -21,15 +21,21 @@
     owner: root
     group: "{{nginx_etc_dir_group}}"
   with_items:
-    - {src: "nginx.conf.j2", dst: "/etc/nginx/nginx.conf"}
-    - {src: "site.conf.j2", dst: "/etc/nginx/sites-available/{{site_name}}.conf"}
+    - {src: "nginx.conf.j2",
+       dst: "/etc/nginx/nginx.conf"}
+    - {src: "site.conf.j2",
+       dst: "/etc/nginx/sites-available/{{site_name}}.conf"}
   become: true
 
-- name: Enable nginx
-  service:
-    name: nginx
-    enabled: yes
+- name: "Create a soft link for {{site_name}} to sites-enabled"
+  file:
+    src: "/etc/nginx/sites-available/{{site_name}}.conf"
+    path: "/etc/nginx/sites-enabled/{{site_name}}.conf"
+    state: link
   become: true
+
+- include: selfsigned.yml
+  when: nginx_cert_type == "self-signed"
 
 - name: Generate DH parameters if it doesn't exist
   command: openssl dhparam -out /etc/ssl/dhparam.pem 4096
