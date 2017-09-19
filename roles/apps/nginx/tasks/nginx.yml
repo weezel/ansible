@@ -10,7 +10,6 @@
   with_items:
     - sites-available
     - sites-enabled
-    - certs
   tags:
     - sites_directories
 
