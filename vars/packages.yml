@@ -8,7 +8,8 @@ packages:
     'ncdu',
     'nload',
     'nmap',
-    'rsync'
+    'rsync',
+    'tig'
   ]
 
   centos: [
