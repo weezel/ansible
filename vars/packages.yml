@@ -22,6 +22,7 @@ packages:
     'rsync',
     'strace',
     'tcpdump',
+    'the_silver_searcher',
     'tmux',
     'vim-common',
     'which',
@@ -52,6 +53,7 @@ packages:
 
   obsd_desktop: [
     'kdiff3',
+    'the_silver_searcher',
     'vim--gtk2-perl-python3-ruby'
   ]
 
