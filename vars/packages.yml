@@ -53,6 +53,7 @@ packages:
 
   obsd_desktop: [
     'kdiff3',
+    'rofi',
     'the_silver_searcher',
     'vim--gtk2-perl-python3-ruby'
   ]
