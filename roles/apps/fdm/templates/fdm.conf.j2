@@ -1,0 +1,43 @@
+#set verify-certificates
+set timeout 30
+
+# Accounts
+#account "my-pop3-example" pop3s server "mail.my-pop3-example.com"
+#	user "{{common.username}}@my-pop3-example.com" pass "testing123"
+
+#account "my-gmail-example" imaps server "imap.gmail.com"
+#	user "my-gmail-example@gmail.com" pass "testing123"
+#	keep
+
+account "localmail"		mbox "/var/mail/{{common.username}}"
+account "dailymail"		mbox "/var/mail/{{common.username}}"
+account "logreport"		mbox "/var/mail/{{common.username}}"
+
+# Actions
+#action "obsd-commits"		maildir "%h/Maildir/.openbsd-commits"
+#action "obsd-tech"		maildir "%h/Maildir/.openbsd-tech"
+#action "obsd-misc"		maildir "%h/Maildir/.openbsd-misc"
+#action "my-gmail-example"	maildir "%h/Maildir/.my-gmail-example"
+
+action "localmail"		maildir "%h/Maildir/.localmail"
+action "dailymail"		maildir "%h/Maildir/.dailymail"
+action "logreport"		maildir "%h/Maildir/.logreport"
+
+# Match rules
+#match "^Sender: owner.*@openbsd\\.org" in headers {
+#	match "^sender:.*source-changes" in headers action "obsd-commits"
+#	match "^sender:.*misc" in headers action "obsd-misc"
+#	match "^sender:.*ports" in headers action "obsd-ports"
+#	match "^sender:.*tech" in headers action "obsd-tech"
+#}
+#match account "my-gmail-example" action "my-gmail-example"
+
+match "^From: Charlie Root" in headers {
+	match "daily output$" in headers action "dailymail"
+	match "log report$" in headers action "logreport"
+}
+match account "localmail" action "localmail"
+# All mail goes to localmail if nothing else matches
+match all action "localmail"
+
+match all action add-header "Rule" value "%[rule]" continue
