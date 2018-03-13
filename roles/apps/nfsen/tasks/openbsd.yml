@@ -1,4 +1,19 @@
 ---
+- name: Initialize an pflow interface
+  copy:
+    src: hostname.pflow0
+    dest: /etc/hostname.pflow0
+    owner: root
+    group: wheel
+    mode: 0640
+  become: true
+  become_method: doas
+
+- name: Start pflow interface
+  shell: /bin/sh /etc/netstart pflow0
+  become: true
+  become_method: doas
+
 - name: Install nfsen
   package:
     name: nfsen
@@ -44,8 +59,15 @@
 
 - name: Initialize nfsen db
   command: install-nfsen.pl /etc/nfsen.conf
-  notify:
-    - restart nfsen
+  become: true
+  become_method: doas
+
+- name: Correct directory permissions
+  file:
+    path: /var/www/htdocs/nfsen
+    owner: _nfcapd
+    mode: 0755
+    state: directory
   become: true
   become_method: doas
 
@@ -60,5 +82,4 @@
     state: restarted
   become: true
   become_method: doas
-
 
