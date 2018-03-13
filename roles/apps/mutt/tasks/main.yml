@@ -1,0 +1,27 @@
+---
+- name: Install/update neomutt (Linux)
+  package:
+    name: neomutt
+    state: latest
+  become: true
+  when: ansible_system == "Linux"
+
+- name: Install/update neomutt (OpenBSD)
+  package:
+    name: neomutt--
+    state: latest
+  become: true
+  become_method: doas
+  when: ansible_system == "OpenBSD"
+
+- name: Copy muttrc over
+  template:
+    src: "muttrc.j2"
+    dest: "{{ansible_user_dir}}/.muttrc"
+    owner: "{{ansible_user_id}}"
+
+- name: Correct permissions
+  file:
+    path: "{{ansible_user_dir}}/.muttrc"
+    mode: 0700
+
