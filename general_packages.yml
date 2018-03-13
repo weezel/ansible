@@ -3,5 +3,5 @@
   vars:
     - server_install: true
   roles:
-    - role: packages
+    - role: default_packages
 
