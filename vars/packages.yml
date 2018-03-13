@@ -60,7 +60,6 @@ packages:
 
   obsd_server: [
     'checkrestart',
-    'logfmon',
     'vnstat',
     'vim--no_x11-perl-python3-ruby'
   ]
