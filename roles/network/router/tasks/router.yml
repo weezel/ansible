@@ -33,7 +33,6 @@
   with_items:
     - "{{network.bridge_if}}"
     - "{{network.vether_if}}"
-    - "{{network.pflow_if}}"
   become: true
   become_method: doas
   # FIXME doesn't work
