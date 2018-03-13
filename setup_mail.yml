@@ -1,0 +1,10 @@
+---
+- hosts: all
+  vars_files:
+    - defaults/defaults.yml
+  vars:
+    - smtp_username: "weezel"
+    - smtp_password: "testing123"
+  roles:
+    - {role: apps/fdm}
+    - {role: apps/mutt}
