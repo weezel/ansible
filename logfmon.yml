@@ -1,0 +1,7 @@
+---
+- hosts: all
+  vars_files:
+    - defaults/defaults.yml
+    - vars/network.yml
+  roles:
+    - {role: apps/logfmon}

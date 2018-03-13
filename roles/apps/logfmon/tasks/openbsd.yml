@@ -1,4 +1,11 @@
 ---
+- name: Install logfmon
+  package:
+    name: logfmon
+    state: latest
+  become: true
+  become_method: doas
+
 - name: Upload logfmon.conf
   template:
     src: logfmon.conf.j2
