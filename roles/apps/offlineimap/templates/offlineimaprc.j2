@@ -1,0 +1,36 @@
+[general]
+accounts = {{gmail1_imap_username}},{{gmail2_imap_username}}
+maxsyncaccounts = 1
+
+[Account {{gmail1_imap_username}}]
+localrepository = {{gmail1_imap_username}}-local
+remoterepository = {{gmail1_imap_username}}-remote
+
+[Repository {{gmail1_imap_username}}-local]
+type = Maildir
+localfolders = ~/Maildir/.{{gmail1_imap_username}}
+
+[Repository {{gmail1_imap_username}}-remote]
+type = Gmail
+sslcacertfile = /etc/ssl/cert.pem
+sync_deletes = yes
+sync_labels = yes
+remoteuser = {{gmail1_imap_username}}
+remotepass = {{gmail1_imap_password}}
+
+[Account {{gmail2_imap_username}}]
+localrepository = {{gmail2_imap_username}}-local
+remoterepository = {{gmail2_imap_username}}-remote
+
+[Repository {{gmail2_imap_username}}-local]
+type = Maildir
+localfolders = ~/Maildir/.{{gmail1_imap_username}}
+
+[Repository {{gmail2_imap_username}}-remote]
+type = Gmail
+sslcacertfile = /etc/ssl/cert.pem
+sync_deletes = yes
+sync_labels = yes
+remoteuser = {{gmail2_imap_username}}
+remotepass = {{gmail2_imap_password}}
+

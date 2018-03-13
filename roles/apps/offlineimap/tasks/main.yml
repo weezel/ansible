@@ -1,0 +1,27 @@
+---
+- name: Install/update offlineimap (Linux)
+  package:
+    name: offlineimap
+    state: latest
+  become: true
+  when: ansible_system == "Linux"
+
+- name: Install/update offlineimap (OpenBSD)
+  package:
+    name: offlineimap
+    state: latest
+  become: true
+  become_method: doas
+  when: ansible_system == "OpenBSD"
+
+- name: Copy offlineimaprc over
+  template:
+    src: "offlineimaprc.j2"
+    dest: "{{ansible_user_dir}}/.offlineimaprc"
+    owner: "{{ansible_user_id}}"
+
+- name: Correct permissions
+  file:
+    path: "{{ansible_user_dir}}/.offlineimaprc"
+    mode: 0700
+
