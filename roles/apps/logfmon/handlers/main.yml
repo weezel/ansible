@@ -3,4 +3,6 @@
   service:
     name: logfmon
     state: restarted
+  become: true
+  become_method: doas
 
