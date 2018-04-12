@@ -19,9 +19,13 @@
     src: "fdm.conf.j2"
     dest: "{{ansible_user_dir}}/.fdm.conf"
     owner: "{{ansible_user_id}}"
+  tags:
+    - fdm_config
 
 - name: Correct permissions
   file:
     path: "{{ansible_user_dir}}/.fdm.conf"
     mode: 0700
+  tags:
+    - fdm_config
 
