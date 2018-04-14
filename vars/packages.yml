@@ -45,6 +45,7 @@ packages:
 
   obsd_common: [
     'ggrep',
+    'gnuwatch',
     'lynx',
     'mtr--',
     'pkg_mgr',
