@@ -2,6 +2,16 @@ server {
 	listen	80;
 	server_name {{site_name}} www.{{site_name}};
 
+{% if ansible_system == "Linux" %}
+	access_log /var/log/nginx/{{site_name}}_access.log main;
+	error_log  /var/log/nginx/{{site_name}}_error.log;
+{% elif ansible_system == "OpenBSD" %}
+	access_log /var/www/logs/{{site_name}}_access.log main;
+	error_log  /var/www/logs/{{site_name}}_error.log;
+{% endif %}
+
+	#root /var/www/htdocs/{{site_name}}
+
 	# Deny access to dot files
 	location ~ /\. {
 		deny all;
@@ -11,14 +21,6 @@ server {
 	location ^~ /.well-known/ {
 		allow all;
 	}
-
-{% if ansible_system == "Linux" %}
-	access_log /var/log/nginx/{{site_name}}_access.log main;
-	error_log  /var/log/nginx/{{site_name}}_error.log;
-{% elif ansible_system == "OpenBSD" %}
-	access_log /var/www/logs/{{site_name}}_access.log main;
-	error_log  /var/www/logs/{{site_name}}_error.log;
-{% endif %}
 
 	return 301 https://www.{{site_name}}$request_uri;
 }
@@ -34,6 +36,8 @@ server {
 	access_log /var/www/logs/{{site_name}}-ssl_access.log main;
 	error_log  /var/www/logs/{{site_name}}-ssl_error.log;
 {% endif %}
+
+	#root /var/www/htdocs/{{site_name}}
 
 {% if nginx_cert_type == "letsencrypt" %}
 	ssl_certificate     /etc/ssl/nginx/{{site_name}}/fullchain.pem;
