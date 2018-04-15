@@ -67,6 +67,11 @@ server {
 		access_log off; log_not_found off; expires max;
 	}
 
+	# Allow Letsencrypt to check this directory
+	location ^~ /.well-known/ {
+		allow all;
+	}
+
 	location / {
 {% if nginx_uwsgi == true %}
 	{% if nginx_reverse_proxy == true %}
