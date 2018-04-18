@@ -22,7 +22,7 @@
 
 - name: Sign the key
   command: >
-    openssl x509 -sha256 -req -days "{{days_valid}}" \
+    openssl x509 -sha256 -req -days "{{ssl.days_valid}}" \
       -in /etc/ssl/nginx/private/{{site_name}}.csr \
       -signkey /etc/ssl/nginx/private/{{site_name}}.key \
       -out /etc/ssl/nginx/{{site_name}}.crt
