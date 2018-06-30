@@ -1,0 +1,10 @@
+---
+- hosts: all
+  vars_files:
+    - defaults/defaults.yml
+    - vars/network.yml
+  roles:
+    - {role: apps/elasticsearch}
+    - {role: apps/logstash}
+    - {role: apps/kibana}
+    - {role: apps/beats/filebeat}

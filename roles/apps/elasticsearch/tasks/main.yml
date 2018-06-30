@@ -1,0 +1,7 @@
+---
+- name: Install Elastic search
+  package:
+    name: elasticsearch
+    state: present
+  become: true
+
