@@ -13,6 +13,17 @@
   tags:
     - sites_directories
 
+- name: "Create /var/www/htdocs/{{site_name}} directory"
+  file:
+    path: "/var/www/htdocs/{{site_name}}"
+    owner: root
+    group: "{{nginx_etc_dir_group}}"
+    mode: 0755
+    state: directory
+  become: true
+  tags:
+    - sites_directories
+
 - name: Copy configuration files over
   template:
     src: "{{item.src}}"
