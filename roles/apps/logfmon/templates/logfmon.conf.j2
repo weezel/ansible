@@ -83,10 +83,15 @@ match in daemon "nfcapd\[[0-9]*\]: Ident:" ignore
 match in mail "smtp-in: New session .*" ignore
 match in mail "smtp-in: Accepted message .*" ignore
 match in mail "smtp-in: Closing session .*" ignore
-match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=connected address=.* host=.*" ignore
-match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=closed .* reason=quit" ignore
-match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=message .* to=.*@fw.lan.*" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ mda delivery .* result=Ok stat=Delivered" ignore
 match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ mda event=delivery .* result=Ok stat=Delivered" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp connected address=.* host=.*" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp disconnected address=.* host=.*" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=closed .* reason=quit" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=connected address=.* host=.*" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=message .* to=.*@.*" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=message address=local host=.* .*" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp message address=local host=.* .*" ignore
 
 # sshd
 # sshd context rules
