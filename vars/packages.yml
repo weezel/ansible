@@ -3,6 +3,7 @@ packages:
   common: [
     'bwm-ng',
     'curl',
+    'fzf',
     'git',
     'iftop',
     'ncdu',
