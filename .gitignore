@@ -3,6 +3,7 @@
 *.retry
 .vagrant
 Vagrantfile
+hosts.ini
 localfacts
 obsdetc
 obsdetc
