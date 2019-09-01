@@ -1,7 +1,0 @@
----
-- hosts: all
-  vars:
-    - server_install: true
-  roles:
-    - role: default_packages
-
