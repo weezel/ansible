@@ -28,8 +28,7 @@
     name: "{{item}}"
     state: latest
     update_cache: yes
-  with_items:
-    - "{{packages.common + packages.ubuntu}}"
+  loop: "{{packages.common + packages.ubuntu|flatten(levels=1)}}"
   become: true
   tags:
     - packages

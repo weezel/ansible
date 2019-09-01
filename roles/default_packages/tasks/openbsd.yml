@@ -3,8 +3,7 @@
   openbsd_pkg:
     name: "{{item}}"
     state: latest
-  with_items:
-    - "{{packages.common + packages.obsd_common}}"
+  loop: "{{packages.common + packages.obsd_common|flatten(levels=1)}}"
   become: true
   become_method: doas
   tags:
@@ -14,8 +13,7 @@
   openbsd_pkg:
     name: "{{item}}"
     state: latest
-  with_items:
-    - "{{packages.obsd_desktop}}"
+  loop: "{{packages.obsd_desktop|flatten(levels=1)}}"
   become: true
   become_method: doas
   when: not server_install | bool
@@ -26,8 +24,7 @@
   openbsd_pkg:
     name: "{{item}}"
     state: latest
-  with_items:
-    - "{{packages.obsd_server}}"
+  loop: "{{packages.obsd_server|flatten(levels=1)}}"
   become: true
   become_method: doas
   when: server_install | bool

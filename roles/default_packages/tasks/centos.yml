@@ -13,8 +13,7 @@
   yum:
     name: "{{item}}"
     state: latest
-  with_items:
-    - "{{packages.common + packages.centos}}"
+  loop: "{{packages.common + packages.centos|flatten(levels=1)}}"
   become_user: root
   become: true
   tags:
