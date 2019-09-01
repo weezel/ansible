@@ -1,7 +1,7 @@
 ---
 - name: "Get dot config files"
   git:
-    repo: "https://github.com/weezel/confs.git"
+    repo: "https://github.com/weezel/configs.git"
     dest: "{{ansible_user_dir}}/configs"
     clone: yes
     update: yes
