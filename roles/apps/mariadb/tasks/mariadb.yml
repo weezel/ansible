@@ -6,7 +6,7 @@
     group: "{{mariadb_group}}"
     mode: 0711
     state: directory
-  with_items:
+  loop:
     - "{{mariadb_base_dir}}"
     - "{{mariadb_base_dir}}/binlog"
     - "{{mariadb_base_dir}}/tmp"

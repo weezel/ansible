@@ -7,7 +7,7 @@
     mode: 0755
     state: directory
   become: true
-  with_items:
+  loop:
     - sites-available
     - sites-enabled
   tags:
