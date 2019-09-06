@@ -57,6 +57,7 @@ packages:
   ]
 
   obsd_desktop: [
+    'ghex',
     'kdiff3',
     'rofi',
     'vim--gtk2-perl-python3-ruby'
