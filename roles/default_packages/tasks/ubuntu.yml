@@ -23,7 +23,7 @@
   tags:
     - apt_conf
 
-- name: Install packages
+- name: Install common packages
   apt:
     name: "{{item}}"
     state: latest
@@ -32,3 +32,14 @@
   become: true
   tags:
     - packages
+
+- name: Install deskop packages
+  apt:
+    name: "{{item}}"
+    state: latest
+    update_cache: yes
+  loop: "{{packages.ubuntu_desktop}}"
+  become: true
+  when: not server_install | bool
+  tags:
+    - desktop_packages
