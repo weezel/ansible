@@ -15,7 +15,7 @@
   lineinfile:
     dest: /etc/apt/apt.conf
     regexp: '^APT::Install-Recommends'
-    line: 'APT::Install-Recommends"0";'
+    line: 'APT::Install-Recommends "0";'
     owner: root
     group: root
     mode: 0644
