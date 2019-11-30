@@ -1,7 +1,0 @@
----
-- name: Install Kibana
-  package:
-    name: kibana
-    state: present
-  become: true
-

@@ -1,7 +1,0 @@
----
-- name: Install Logstash
-  package:
-    name: logstash
-    state: present
-  become: true
-
