@@ -8,8 +8,10 @@ packages:
     'iftop',
     'ncdu',
     'nload',
+    'neovim',
     'nmap',
-    'tig'
+    'tig',
+    'tree'
   ]
 
   centos: [
@@ -24,7 +26,6 @@ packages:
     'tcpdump',
     'the_silver_searcher',
     'tmux',
-    'vim-common',
     'which',
     'whois'
   ]
@@ -37,14 +38,29 @@ packages:
     'openssh-server',
     'policycoreutils',
     'rsync',
+    'silversearcher-ag',
     'strace',
     'tcpdump',
     'tmux',
-    'vim-common',
     'whois'
   ]
 
+# Suckless tools are needed for dmenu
+  ubuntu_desktop: [
+    'binwalk',
+    'chromium-browser',
+    'firefox',
+    'fonts-hack',
+    'i3',
+    'i3lock',
+    'i3status',
+    'python3-neovim',
+    'suckless-tools',
+    'vim-gtk3'
+  ]
+
   obsd_common: [
+    'binwalk',
     'ggrep',
     'gnuwatch',
     'lynx',
