@@ -1,0 +1,17 @@
+---
+- name: Install fstrim
+  apt:
+    name: util-linux
+    state: latest
+    update_cache: yes
+    install_recommends: no
+  become: true
+  tags: fstrim
+
+- name: Run fstrim continuously
+  cron:
+    name: "fstrim"
+    special_time: daily
+    job: "fstrim -a"
+  become: true
+  tags: fstrim
