@@ -1,0 +1,44 @@
+---
+- name: Create xorg.conf.d (Linux)
+  file:
+    path: /etc/X11/xorg.conf.d
+    owner: root
+    group: root
+    mode: '0755'
+    state: directory
+  become: yes
+  when: ansible_system == "Linux"
+
+- name: Enable zap in xorg (Linux)
+  copy:
+    src: "enable_zap.conf"
+    dest: "/etc/X11/xorg.conf.d/20-enable-zap.conf"
+    owner: root
+    group: root
+    mode: '0744'
+  become: yes
+  when: ansible_system == "Linux"
+
+
+- name: Create xorg.conf.d (OpenBSD)
+  file:
+    path: /etc/X11/xorg.conf.d
+    owner: root
+    group: wheel
+    mode: '0755'
+    state: directory
+  become: yes
+  become_method: doas
+  when: ansible_system == "OpenBSD"
+
+- name: Enable zap in xorg (OpenBSD)
+  copy:
+    src: "enable_zap.conf"
+    dest: "/etc/X11/xorg.conf.d/20-enable-zap.conf"
+    owner: root
+    group: wheel
+    mode: '0744'
+  become: yes
+  become_method: doas
+  when: ansible_system == "OpenBSD"
+
