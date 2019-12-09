@@ -1,0 +1,10 @@
+---
+- name: Install intel backlight
+  copy:
+    src: lnx_xorg.conf
+    dest: /usr/share/X11/xorg.conf.d/80-backlight.conf
+    owner: root
+    group: root
+    mode: '0744'
+  become: yes
+
