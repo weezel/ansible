@@ -5,6 +5,7 @@
     dest: "{{ansible_user_dir}}/configs"
     clone: yes
     update: yes
+    force: no
   tags:
     - getconfigs
 
@@ -14,5 +15,6 @@
     dest: "{{ansible_user_dir}}/scripts"
     clone: yes
     update: yes
+    force: no
   tags:
     - getscripts
