@@ -37,6 +37,7 @@ packages:
     'ntpdate',
     'openssh-server',
     'policycoreutils',
+    'python3-venv',
     'rsync',
     'silversearcher-ag',
     'strace',
@@ -49,38 +50,54 @@ packages:
   ubuntu_desktop: [
     'binwalk',
     'chromium-browser',
+    'compton',
     'firefox',
     'fonts-hack',
     'i3',
     'i3lock',
     'i3status',
+    'pavucontrol',
     'python3-neovim',
+    'sct',
     'suckless-tools',
-    'vim-gtk3'
+    'vim-gtk3',
+    'volumeicon', # XXX
+    'xbacklight',
+    'xserver-xorg-input-synaptics'
   ]
 
   obsd_common: [
-    'binwalk',
+    'checkrestart',
+    'coreutils',
     'ggrep',
     'gnuwatch',
     'lynx',
     'mtr--',
     'pkg_mgr',
     'pkglocatedb',
+    'py3-neovim',
     'rsync--iconv',
     'sysclean',
     'the_silver_searcher'
   ]
 
   obsd_desktop: [
+    'binwalk',
+    'compton',
+    'chromium',
+    'firefox',
     'ghex',
+    'go',
+    'hack-fonts',
+    'i3',
+    'i3status',
     'kdiff3',
     'rofi',
-    'vim--gtk2-perl-python3-ruby'
+    'sct',
+    'vim--gtk3-perl-python3-ruby'
   ]
 
   obsd_server: [
-    'checkrestart',
     'vnstat',
     'vim--no_x11-perl-python3-ruby'
   ]
