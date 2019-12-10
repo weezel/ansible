@@ -1,0 +1,11 @@
+---
+- name: Copy XSession file (Linux)
+  copy:
+    src: xsession.desktop
+    dest: /usr/share/xsessions
+    owner: root
+    group: root
+    mode: '0744'
+  become: yes
+  when: ansible_system == "Linux"
+
