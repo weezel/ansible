@@ -93,6 +93,7 @@ packages:
     'i3',
     'i3status',
     'kdiff3',
+    'mpv',
     'rofi',
     'sct',
     'vim--gtk3-perl-python3-ruby'
