@@ -32,7 +32,7 @@ packages:
 
   ubuntu: [
     'dstat',
-    'mtr',
+    'mtr-tiny',
     'nmap',
     'ntpdate',
     'openssh-server',
