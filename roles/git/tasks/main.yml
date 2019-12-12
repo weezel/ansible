@@ -1,0 +1,10 @@
+---
+- set_fact:
+    user_home_dir: "{{ lookup('env', 'HOME') }}"
+
+- name: Setup gituser
+  template:
+    src: "gituser.j2"
+    dest: "{{ user_home_dir }}/.gituser"
+    mode: 0600
+
