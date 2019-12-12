@@ -1,0 +1,19 @@
+---
+- set_fact:
+    user_home_dir: "{{ lookup('env', 'HOME') }}"
+
+- file:
+    path: "{{ user_home_dir }}/.config/i3"
+    mode: 0700
+    state: directory
+
+- name: Copy i3 config file over
+  copy:
+    src: "i3_{{ ansible_system|lower }}.config"
+    dest: "{{ user_home_dir }}/.config/i3/config"
+
+- name: Copy i3status file over
+  copy:
+    src: "i3status_{{ ansible_system|lower }}.conf"
+    dest: "{{ user_home_dir }}/.i3status.conf"
+
