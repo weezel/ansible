@@ -9,6 +9,6 @@
     - gmail2_imap_username: "weezel2"
     - gmail2_imap_password: "testing321"
   roles:
-    - {role: apps/fdm}
-    - {role: apps/offlineimap}
-    - {role: apps/mutt}
+    - { role: fdm }
+    - { role: offlineimap }
+    - { role: mutt }
