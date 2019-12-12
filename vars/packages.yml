@@ -56,6 +56,7 @@ packages:
     'i3',
     'i3lock',
     'i3status',
+    'kdiff3',
     'pavucontrol',
     'python3-neovim',
     'sct',
