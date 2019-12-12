@@ -21,7 +21,7 @@
     - {role: default_packages}
     - {role: dotconfigs}
     - {role: network/router}
-    - {role: apps/dhcpd}
-    - {role: apps/unbound}
-    - {role: apps/nfsen}
+    - {role: dhcpd}
+    - {role: unbound}
+    - {role: nfsen}
     - {role: network/firewall}

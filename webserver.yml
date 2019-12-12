@@ -8,5 +8,5 @@
     - site_name: "coolsites.lan.local"
 
   roles:
-    - {role: apps/nginx}
+    - {role: nginx}
 #    - {role: apps/php}
