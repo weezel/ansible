@@ -1,7 +1,7 @@
 ---
 # Needed pre-steps
 # 1. Configure doas.conf
-# 2. Configure installurl
+# 2. Configure /etc/installurl
 # 3. Install python 3.x on the target machine
 
 - hosts: all
@@ -9,19 +9,19 @@
     - vars/network.yml
     - vars/packages.yml
     - vars/openbsd.yml
+    - vars/user.yml
   vars:
     - server_install: true
     - ip_stub: "192.168.10."
-    - common:
-        - username: "weezel"
     - network:
         - domain_name: "my.home.lan"
 
   roles:
-    - {role: default_packages}
-    - {role: dotconfigs}
-    - {role: network/router}
-    - {role: dhcpd}
-    - {role: unbound}
-    - {role: nfsen}
-    - {role: network/firewall}
+    - { role: default_packages }
+    - { role: dotconfigs }
+    - { role: network/router }
+    - { role: dhcpd }
+    - { role: unbound }
+    - { role: nfsen }
+    - { role: network/firewall }
+

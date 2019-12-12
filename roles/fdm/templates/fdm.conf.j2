@@ -3,15 +3,15 @@ set timeout 30
 
 # Accounts
 #account "my-pop3-example" pop3s server "mail.my-pop3-example.com"
-#	user "{{common.username}}@my-pop3-example.com" pass "testing123"
+#	user "{{user.nickname}}@my-pop3-example.com" pass "testing123"
 
 #account "my-gmail-example" imaps server "imap.gmail.com"
 #	user "my-gmail-example@gmail.com" pass "testing123"
 #	keep
 
-account "localmail"		mbox "/var/mail/{{common.username}}"
-account "dailymail"		mbox "/var/mail/{{common.username}}"
-account "logreport"		mbox "/var/mail/{{common.username}}"
+account "localmail"		mbox "/var/mail/{{user.nickname}}"
+account "dailymail"		mbox "/var/mail/{{user.nickname}}"
+account "logreport"		mbox "/var/mail/{{user.nickname}}"
 
 # Actions
 #action "obsd-commits"		maildir "%h/Maildir/.openbsd-commits"

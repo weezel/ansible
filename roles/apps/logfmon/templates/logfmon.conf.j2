@@ -54,8 +54,8 @@ match in { daemon messages } "ntpd\\[[0-9]*\\]: reply from [0-9.]: not synced .*
 #match in messages "identd\\[[0-9]*\\]: Connection from localhost" ignore
 #match in messages "identd\\[[0-9]*\\]: request for .* from localhost" ignore
 #match in messages "identd\\[[0-9]*\\]: Connection from nikita" ignore
-#match in messages "identd\\[[0-9]*\\]: request for .* from {{common.username}}" ignore
-#match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : {{common.username}}" ignore
+#match in messages "identd\\[[0-9]*\\]: request for .* from {{user.nickname}}" ignore
+#match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : {{user.nickname}}" ignore
 #match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : smmsp" ignore
 #match in messages "identd\\[[0-9]*\\]: Successful lookup: [0-9]* , 25 : root" ignore
 
@@ -102,10 +102,10 @@ match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp message address=local host=.* .
 #match in auth "sshd\\[\\([0-9]*\\)\\]: Received disconnect from .*" close "sshd-$1" pipe "/usr/bin/mail -s \"`date` ssh attempt\" root"
 
 # Normal sshd rules
-match in auth "sshd\\[[0-9]*\\]: Accepted publickey for {{common.username}} from {{network.subnet.split('0')[0]}}[0-9]+ port [0-9]" ignore
+match in auth "sshd\\[[0-9]*\\]: Accepted publickey for {{user.nickname}} from {{network.subnet.split('0')[0]}}[0-9]+ port [0-9]" ignore
 match in auth "sshd\\[[0-9]*\\]: Connection closed by {{network.subnet.split('0')[0]}}[0-9]+" ignore
 match in auth "sshd\\[[0-9]*\\]: Disconnected from {{network.subnet.split('0')[0]}}[0-9]+" ignore
-match in auth "sshd\\[[0-9]*\\]: Failed password for {{common.username}} from {{network.subnet.split('0')[0]}}[0-9]+ port [0-9]" ignore
+match in auth "sshd\\[[0-9]*\\]: Failed password for {{user.nickname}} from {{network.subnet.split('0')[0]}}[0-9]+ port [0-9]" ignore
 match in auth "sshd\\[[0-9]*\\]: Received disconnect from {{network.subnet.split('0')[0]}}[0-9]+ port.*: disconnected by user" ignore
 
 #match in auth "sshd\\[[0-9]*\\]: Invalid user .* from \\([0-9.]*\\)" exec "grep $1 /etc/pf.ignore || (echo $1 >> /etc/pf.ignore; pfctl -t ignore -T add $1; pfctl -k $1)"
@@ -115,15 +115,15 @@ match in auth "sshd\\[[0-9]*\\]: Received disconnect from {{network.subnet.split
 match in mail "fetchmail\\[[0-9]*\\]: .*" ignore
 
 # sudo
-match in secure "sudo:[ \t]*{{common.username}} .*" ignore
+match in secure "sudo:[ \t]*{{user.nickname}} .*" ignore
 match in secure "sudo:[ \t]*root .*" ignore
 
 # doas
-match in secure "doas: {{common.username}} ran command .*" ignore
+match in secure "doas: {{user.nickname}} ran command .*" ignore
 
 # sendmail
 match in mail "sm-mta\\[[0-9]*\\]: .*" ignore
 match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: to=root, ctladdr=.*, delay=00:00:0[0-9], xdelay=00:00:0[0-9], mailer=relay, pri=[0-9]*, relay=.*, dsn=2.0.0, stat=Sent .*" ignore
-match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: to={{common.username}}, ctladdr=.*, delay=00:00:0[0-9], xdelay=00:00:0[0-9], mailer=relay, pri=[0-9]*, relay=.*, dsn=2.0.0, stat=Sent .*" ignore
+match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: to={{user.nickname}}, ctladdr=.*, delay=00:00:0[0-9], xdelay=00:00:0[0-9], mailer=relay, pri=[0-9]*, relay=.*, dsn=2.0.0, stat=Sent .*" ignore
 match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: from=root, size=[0-9]*, class=[0-9], nrcpts=[0-9], msgid=.*, relay=.*" ignore
-match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: from={{common.username}}, size=[0-9]*, class=[0-9], nrcpts=[0-9], msgid=.*, relay=.*" ignore
+match in mail "sendmail\\[[0-9]*\\]: [a-zA-Z0-9]*: from={{user.nickname}}, size=[0-9]*, class=[0-9], nrcpts=[0-9], msgid=.*, relay=.*" ignore

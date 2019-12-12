@@ -1,5 +1,3 @@
 ---
 server_install: true
 
-common:
-  username: "weezel"
