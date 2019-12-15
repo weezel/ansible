@@ -63,9 +63,9 @@ packages:
     'sct',
     'suckless-tools',
     'vim-gtk3',
-    'volumeicon', # XXX
     'xbacklight',
-    'xserver-xorg-input-synaptics'
+    'xserver-xorg-input-synaptics',
+    'xclip'
   ]
 
   obsd_common: [
@@ -99,7 +99,8 @@ packages:
     'mpv',
     'rofi',
     'sct',
-    'vim--gtk3-perl-python3-ruby'
+    'vim--gtk3-perl-python3-ruby',
+    'xclip'
   ]
 
   obsd_server: [
