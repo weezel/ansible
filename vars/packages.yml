@@ -62,6 +62,7 @@ packages:
     'python3-neovim',
     'sct',
     'suckless-tools',
+    'geeqie',
     'vim-gtk3',
     'xbacklight',
     'xserver-xorg-input-synaptics',
@@ -89,6 +90,7 @@ packages:
     'chromium',
     'ffmpeg',
     'firefox',
+    'geeqie',
     'ghex',
     'go',
     'hack-fonts',
@@ -99,6 +101,7 @@ packages:
     'mpv',
     'rofi',
     'sct',
+    'tray-ap',
     'vim--gtk3-perl-python3-ruby',
     'xclip'
   ]
