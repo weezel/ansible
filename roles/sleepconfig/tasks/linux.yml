@@ -1,0 +1,32 @@
+---
+- debug:
+    msg: "Handle lid actions in Linux"
+  when: ansible_system == "Linux"
+
+- name: Ignore HandleLidSwitch
+  lineinfile:
+    path: /etc/systemd/logind.conf
+    state: present
+    regex: "^HandleLidSwitch"
+    line: "HandleLidSwitch=ignore"
+  become: yes
+  when: ansible_system == "Linux"
+
+- name: Ignore HandleLidSwitchExternalPower
+  lineinfile:
+    path: /etc/systemd/logind.conf
+    state: present
+    regex: "^HandleLidSwitchExternalPower"
+    line: "HandleLidSwitchExternalPower=ignore"
+  become: yes
+  when: ansible_system == "Linux"
+
+- name: Ignore HandleLidSwitchDocked
+  lineinfile:
+    path: /etc/systemd/logind.conf
+    state: present
+    regex: "^HandleLidSwitchDocked"
+    line: "HandleLidSwitchDocked=ignore"
+  become: yes
+  when: ansible_system == "Linux"
+
