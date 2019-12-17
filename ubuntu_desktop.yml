@@ -11,6 +11,7 @@
     - { role: default_packages }
     - { role: dotconfigs }
 
+    - { role: sleepconfig }
     - { role: git }
     - { role: fstrim }
     - { role: intel_backlight }
