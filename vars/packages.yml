@@ -67,6 +67,7 @@ packages:
     'vim-gtk3',
     'xbacklight',
     'xserver-xorg-input-synaptics',
+    'xsettingsd',
     'xclip'
   ]
 
