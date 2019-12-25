@@ -1,0 +1,19 @@
+---
+- hosts: all
+  vars_files:
+    - vars/packages.yml
+    - vars/user.yml
+  vars:
+    - server_install: false
+
+  roles:
+    # These must be first
+    - { role: default_packages }
+    - { role: dotconfigs }
+
+    - { role: git }
+    - { role: sysctl }
+    - { role: wsconsctl }
+    - { role: xorg_zap }
+    - { role: i3 }
+    - { role: xsession }
