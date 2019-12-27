@@ -1,0 +1,12 @@
+---
+- name: "Add {{ user.nickname }} to additional groups"
+  user:
+    name: "{{ user.nickname }}"
+    groups: "{{ item }}"
+    append: yes
+  loop:
+    - dialout
+    - sudo
+    - wireshark
+  become: yes
+  when: ansible_system == "Linux"
