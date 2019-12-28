@@ -75,3 +75,18 @@
 
   become: true
 
+- name: Disable tracker since that's useless cruft
+  systemd:
+    name: "{{ item }}"
+    state: stopped
+    enabled: no
+    masked: yes
+    scope: user
+  loop:
+    - tracker-store.service
+    - tracker-miner-fs.service
+    - tracker-miner-rss.service
+    - tracker-extract.service
+    - tracker-miner-apps.service
+    - tracker-writeback.service
+
