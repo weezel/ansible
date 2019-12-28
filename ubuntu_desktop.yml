@@ -11,6 +11,7 @@
     - { role: default_packages }
     - { role: dotconfigs }
 
+    - { role: telemetry }
     - { role: sleepconfig }
     - { role: git }
     - { role: fstrim }

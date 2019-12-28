@@ -1,0 +1,67 @@
+---
+- name: Don't send data
+  shell: ubuntu-report -f send no
+
+- name: Package mangling
+  block:
+    - name: Remove telemetry package(s)
+      package:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - popularity-contest
+        - apturl
+        - zeitgeist
+        - zeitgeist-datahub
+        - zeitgeist-core
+
+    - name: Add some packages removed by popularity-contest package
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - friendly-recovery
+        - iputils-tracepath
+        - irqbalance
+        - python3-gdbm
+
+    - name: Clean leftover packages
+      apt:
+        autoremove: yes
+
+    - name: Remove now obsolete unkown command directory
+      file:
+        path: /var/lib/command-not-found
+        state: absent
+
+  become: true
+
+- name: Disable motd news
+  block:
+    - name: Disable all motd crap
+      file:
+        path: "{{ item }}"
+        mode: '0000'
+      with_fileglob:
+        - "/etc/update-motd.d/*"
+
+    - name: Disable motd explicitly
+      lineinfile:
+        path: /etc/default/motd-news
+        regexp: "^ENABLED="
+        line: "ENABLED=0"
+
+    - name: Put bogus URL for motd news
+      lineinfile:
+        path: /etc/default/motd-news
+        regexp: "^URLS="
+        line: "URLS=127.0.0.1"
+
+    - name: Disable systemd motd service
+      systemd:
+        name: motd-news.timer
+        state: stopped
+        enabled: no
+
+  become: true
+
