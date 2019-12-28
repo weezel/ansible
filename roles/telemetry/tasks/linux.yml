@@ -63,5 +63,15 @@
         state: stopped
         enabled: no
 
+    - name: Disable motd PAM modules
+      lineinfile:
+        path: "{{ item }}"
+        regexp: '^(session.*motd\=/run/motd.dynamic$)'
+        line: '#\1'
+        backrefs: yes
+      loop:
+        - /etc/pam.d/login
+        - /etc/pam.d/sshd
+
   become: true
 
