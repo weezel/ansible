@@ -11,7 +11,7 @@
     name: "{{ item }}"
   loop:
     - bridge-utils
-    - libspice-client-gtk-3.0-5
+    - gir1.2-spiceclientgtk-3.0
     - libvirt-clients
     - libvirt-daemon-system
     - qemu-block-extra
