@@ -1,0 +1,74 @@
+---
+- name: "Ensure {{ virt_pool_path }} exists"
+  file:
+    path: "{{ virt_pool_path }}"
+    owner: "{{ user.nickname }}"
+    state: directory
+  become: true
+
+- name: "Install required packages for virt-manager"
+  apt:
+    name: "{{ item }}"
+  loop:
+    - bridge-utils
+    - libspice-client-gtk-3.0-5
+    - libvirt-clients
+    - libvirt-daemon-system
+    - qemu-block-extra
+    - qemu-kvm
+    - qemu-utils
+    - virt-manager
+  become: true
+
+- name: "Add user {{ user.nickname }} to appropriate groups"
+  user:
+    name: "{{ user.nickname }}"
+    groups: "{{ item }}"
+    append: yes
+  loop:
+    - libvirt
+    - kvm
+  become: true
+
+- name: "Start virt daemon"
+  systemd:
+    name: libvirtd
+    enabled: yes
+    state: started
+  become: true
+
+- name: "Configure virt pool"
+  block:
+    - name: "Destroy default pool"
+      virt_pool:
+        name: default
+        command: destroy
+      ignore_errors: yes
+
+    - name: "Undefine default pool"
+      virt_pool:
+        name: default
+        command: undefine
+      ignore_errors: yes
+
+    - name: "Create a new directory pool in {{ virt_pool_path }}"
+      virt_pool:
+        name: default
+        command: define
+        xml: "{{ lookup('template', 'dir_pool.xml.j2') }}"
+
+    - name: "Activate pool"
+      virt_pool:
+        name: default
+        state: active
+        autostart: yes
+
+    - name: "Autostart pool"
+      virt_pool:
+        name: default
+        autostart: yes
+      notify:
+        - restart libvirtd
+  become: true
+  tags: virt-pool
+
