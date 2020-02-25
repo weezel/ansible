@@ -1,4 +1,14 @@
 ---
+- name: Ensure /etc/apt/apt.conf exists
+  file:
+    path: /etc/apt/apt.conf
+    state: touch
+    modification_time: preserve
+    access_time: preserve
+  become: true
+  tags:
+    - apt_conf
+
 - name: No suggested packages
   lineinfile:
     dest: /etc/apt/apt.conf
