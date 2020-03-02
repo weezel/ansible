@@ -66,6 +66,7 @@ packages:
     'mupdf',
     'pavucontrol',
     'python3-neovim',
+    'python3-psutil',
     'python3-wheel',
     'rofi',
     'scrot',

@@ -13,3 +13,6 @@
 
 - name: Configure interface names
   import_tasks: interface_names.yml
+
+- name: Sounds off
+  import_tasks: no_sounds.yml

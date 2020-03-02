@@ -1,0 +1,6 @@
+---
+- name: Disable alert and notification sounds
+  dconf:
+    key: '/org/gnome/desktop/sound/event-sounds'
+    value: 'false'
+    state: present
