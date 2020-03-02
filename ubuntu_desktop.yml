@@ -19,4 +19,4 @@
     - { role: xorg_zap }
     - { role: i3 }
     - { role: xsession }
-    - { role: linux_desktop }
+    - { role: linux }
