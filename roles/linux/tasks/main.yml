@@ -10,3 +10,6 @@
     - wireshark
   become: yes
   when: ansible_system == "Linux"
+
+- name: Configure interface names
+  import_tasks: interface_names.yml
