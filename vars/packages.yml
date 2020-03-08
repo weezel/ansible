@@ -51,6 +51,7 @@ packages:
     'binwalk',
     'chromium-browser',
     'compton',
+    'docker.io',
     'feh',
     'firefox',
     'fonts-hack',
