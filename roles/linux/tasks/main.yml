@@ -6,8 +6,8 @@
     append: yes
   loop:
     - dialout
+    - docker
     - sudo
-    - wireshark
   become: yes
   when: ansible_system == "Linux"
 
