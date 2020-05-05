@@ -12,7 +12,7 @@
 - name: Enable zap in xorg (Linux)
   copy:
     src: "enable_zap.conf"
-    dest: "/etc/X11/xorg.conf.d/20-enable-zap.conf"
+    dest: "/etc/X11/xorg.conf.d/90-enable-zap.conf"
     owner: root
     group: root
     mode: '0744'
@@ -34,7 +34,7 @@
 - name: Enable zap in xorg (OpenBSD)
   copy:
     src: "enable_zap.conf"
-    dest: "/etc/X11/xorg.conf.d/20-enable-zap.conf"
+    dest: "/etc/X11/xorg.conf.d/90-enable-zap.conf"
     owner: root
     group: wheel
     mode: '0744'
