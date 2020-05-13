@@ -48,10 +48,13 @@ packages:
 
 # Suckless tools are needed for dmenu
   ubuntu_desktop: [
+    'adwaita-icon-theme-full',
     'binwalk',
     'chromium-browser',
     'compton',
     'docker.io',
+    'evolution',
+    'exuberant-ctags',
     'feh',
     'firefox',
     'fonts-hack',
@@ -104,6 +107,7 @@ packages:
     'chromium',
     'ectags',
     'evince',
+    'evolution',
     'feh',
     'ffmpeg',
     'firefox',
