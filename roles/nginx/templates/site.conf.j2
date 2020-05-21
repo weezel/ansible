@@ -49,6 +49,7 @@ server {
 	ssl_certificate_key /etc/ssl/nginx/private/{{site_name}}.key;
 {% endif %}
 
+	# https://www.ssllabs.com/ssltest/analyze.html
 	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
 	ssl_prefer_server_ciphers on;
 	ssl_dhparam /etc/ssl/dhparam.pem;
@@ -57,6 +58,7 @@ server {
 	ssl_session_cache shared:SSL:50m;
 	ssl_stapling on;
 	ssl_stapling_verify on;
+	# https://securityheaders.com/
 	add_header Feature-Policy none;
 	add_header Strict-Transport-Security max-age=15768000;
 	add_header X-Content-Type-Options "nosniff" always;
