@@ -1,0 +1,33 @@
+---
+- name: "Check if password file is set"
+  become: yes
+  become_method: doas
+  stat: path="{{ restic_vars.password_path }}"
+  register: password_set
+
+- fail:
+    msg: |
+      Password is not set in {{ restic_vars.password_path }}
+      Once created, init a repository for backups:
+      restic init --password-file={{ restic_vars.password_path }} -r /backup/repo-name-here
+  when: not password_set.stat.exists
+
+- name: "Copy restic backup files"
+  become: yes
+  become_method: doas
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dst }}"
+    owner: root
+    group: "{{ restic.group_name }}"
+    mode: 0600
+  loop: "{{ restic_backup_files }}"
+
+- name: "Install restic cron"
+  become: yes
+  become_method: doas
+  cron:
+    name: "restic backups"
+    hour: "3"
+    minute: "30"
+    job: "/bin/ksh {{ restic_backup_files[0].dst }}"

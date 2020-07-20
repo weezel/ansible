@@ -1,0 +1,10 @@
+---
+restic_vars:
+  # No support for different locations, sorry lad
+  password_path: "/root/.backuppass"
+
+restic_backup_files:
+  - src: "{{ server_name }}_crontab.sh"
+    dst: "/root/{{ server_name }}_crontab.sh"
+  - src: "{{ server_name }}_excludes.txt"
+    dst: "/root/{{ server_name }}_excludes.txt"

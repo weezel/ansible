@@ -1,0 +1,3 @@
+---
+restic:
+  group_name: "{{'wheel' if (ansible_facts.os_family == \"OpenBSD\") else 'root'}}"

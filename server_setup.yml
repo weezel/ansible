@@ -1,0 +1,17 @@
+# ansible-playbook -i severi, -e "server_name=severi" server_setup.yml
+---
+- hosts: all
+  vars_files:
+    - vars/packages.yml
+    - vars/user.yml
+    - vars/machines/{{ server_name }}.yml
+  vars:
+    - server_install: true
+
+  roles:
+    # These must be first
+#   - { role: default_packages }
+#   - { role: dotconfigs }
+
+#   - { role: git }
+    - { role: restic }
