@@ -1,5 +1,6 @@
 # {{ansible_managed}}
 server:
+	num-threads: 2
 	interface: {{network.router_ip_addr}}
 	interface: 127.0.0.1
 	access-control: {{network.cidr_addr}} allow
