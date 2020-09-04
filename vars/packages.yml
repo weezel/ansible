@@ -121,7 +121,7 @@ packages:
     'i3',
     'i3status',
     'kdiff3',
-    'keepassx',
+    'keepassxc',
     'mpv',
     'mupdf',
     'py3-dateutil',
