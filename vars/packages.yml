@@ -65,7 +65,7 @@ packages:
     'i3lock',
     'i3status',
     'kdiff3',
-    'keepassx',
+    'keepassxc',
     'libpython3.7-dev',
     'mpv',
     'mupdf',
