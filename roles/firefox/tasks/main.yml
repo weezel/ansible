@@ -1,0 +1,16 @@
+---
+- name: Start and kill Firefox to get the profiles directory
+  shell: firefox --headless & sleep 5 ; pkill -f firefox
+  ignore_errors: true
+
+- name: Get Firefox profile directory
+  shell: ls -d ~/.mozilla/firefox/*.default | head -n1
+  register: firefox_default_profile_dir
+
+
+- name: Copy user.js to profile directory
+  copy:
+    src: "user.js"
+    dest: "{{ firefox_default_profile_dir.stdout }}/user.js"
+  when: firefox_default_profile_dir is defined
+
