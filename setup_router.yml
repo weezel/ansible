@@ -22,6 +22,5 @@
     - { role: network/router }
     - { role: dhcpd }
     - { role: unbound }
-    - { role: nfsen }
     - { role: network/firewall }
 
