@@ -1,4 +1,13 @@
 ---
+- name: Get vether0 MAC
+  block:
+    - name: MAC of the vether interface
+      shell: ifconfig {{ network.vether_if[0] }} |awk '$1 == "lladdr" {print $2}'
+      register: vether_mac_output
+    - name: Store current vether MAC in variable
+      set_fact:
+        vether_mac: "{{vether_mac_output.stdout.split('\n')|default('aa:bb:cc:dd')}}"
+
 - name: Enable dhcpd
   command: "rcctl enable dhcpd"
   become: true
@@ -7,7 +16,7 @@
     - dhcpd
 
 - name: Configure dhcpd in /etc/rc.conf.local
-  command: "rcctl set dhcpd flags {{network.vether_if[0]}}"
+  command: "rcctl set dhcpd flags {{ network.vether_if[0] }}"
   become: true
   become_method: doas
   tags:

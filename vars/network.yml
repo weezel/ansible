@@ -14,7 +14,6 @@ network:
 
   router_hostname: "fw"
   router_ip_addr: "{{ip_stub + '1'}}"
-  router_mac: "aa:bb:cc:dd:ee:ff"
 
   subnet: "{{ip_stub + '0'}}"
   netmask: "255.255.255.0"
