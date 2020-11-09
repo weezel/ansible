@@ -8,4 +8,4 @@ sysctl: [
 ]
 
 pf:
-  uplink_bw: "112 Mbps"
+  uplink_bw: "112MB"
