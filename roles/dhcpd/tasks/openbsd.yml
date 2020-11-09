@@ -1,12 +1,7 @@
 ---
 - name: Get vether0 MAC
-  block:
-    - name: MAC of the vether interface
-      shell: ifconfig {{ network.vether_if[0] }} |awk '$1 == "lladdr" {print $2}'
-      register: vether_mac_output
-    - name: Store current vether MAC in variable
-      set_fact:
-        vether_mac: "{{vether_mac_output.stdout.split('\n')|default('aa:bb:cc:dd')}}"
+  set_fact:
+    vether_mac: "{{ ansible_vether0.macaddress }}"
 
 - name: Dhcpd for {{ network.vether_if[0] }}
   block:
@@ -27,20 +22,20 @@
   - name: Enable dhcpd for {{ network.vlan_ifs[0] }}
     command: "rcctl enable dhcpd_vlan100"
   - name: Configure dhcpd for {{ network.vlan_ifs[0] }} 
-    command: "rcctl set dhcpd flags {{ network.vlan_ifs[0] }}"
+    command: "rcctl set dhcpd_vlan100 flags {{ network.vlan_ifs[0] }}"
   become: true
   become_method: doas
 
 - name: Upload conf files
   template:
-    src: item.key
-    dest: item.value
+    src: "{{ item.src }}"
+    dest: "{{ item.dst }}"
     owner: root
     group: wheel
     mode: 0640
   loop:
-    - { "dhcpd.conf.j2": "/etc/dhcpd.conf" }
-    - { "dhcpd_vlan100.conf.j2": "/etc/dhcpd_vlan100.conf" }
+    - { src: "dhcpd.conf.j2", dst: "/etc/dhcpd.conf" }
+    - { src: "dhcpd_vlan100.conf.j2", dst: "/etc/dhcpd_vlan100.conf" }
   become: true
   become_method: doas
   tags: tada
