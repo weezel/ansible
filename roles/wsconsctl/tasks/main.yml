@@ -1,0 +1,8 @@
+---
+- name:
+  copy:
+    src: desktop_wsconsctl.conf
+    dest: /etc/wsconsctl.conf
+  become_method: doas
+  become: true
+  when: ansible_system == "OpenBSD"
