@@ -15,6 +15,6 @@
     owner: root
     group: wheel
     mode: 0600
-    validate: pfctl -nf %s
+      #validate: pfctl -nf %s # Some of the interfaces aren't up so we cannot do the checks
   become: true
 
