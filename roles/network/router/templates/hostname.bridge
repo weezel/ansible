@@ -2,8 +2,14 @@ add {{network.vether_if[0]}}
 {% for ifname in network.lan_if %}
 add {{ifname}}
 {% endfor %}
+{% for ifname in network.wlan_if %}
+add {{ifname}}
+{% endfor %}
 blocknonip {{network.vether_if[0]}}
 {% for ifname in network.lan_if %}
+blocknonip {{ifname}}
+{% endfor %}
+{% for ifname in network.wlan_if %}
 blocknonip {{ifname}}
 {% endfor %}
 up

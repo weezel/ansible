@@ -4,8 +4,9 @@ ip_stub: "192.168.222."
 network:
   domain_name: "local.lan"
 
+  lan_if: ["em0"]
+  wlan_if: ["em1"]
   internet_if: ["em2"]
-  lan_if: ["em0", "em1"]
 
   bridge_if: ["bridge0"]
   vether_if: ["vether0"]
@@ -23,7 +24,7 @@ network:
   dhcpd_range_start: "{{ip_stub + '50'}}"
   dhcpd_range_end: "{{ip_stub + '250'}}"
 
-network_bridge_devs: "{{network.lan_if + network.vether_if}}"
+network_bridge_devs: "{{network.lan_if + network.wlan_if + network.vether_if}}"
 
 static_hosts:
   - name: "host1"

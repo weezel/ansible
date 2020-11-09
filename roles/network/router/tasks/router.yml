@@ -11,6 +11,18 @@
   become: true
   become_method: doas
 
+- name: Initialize WLAN hostname.if files
+  template:
+    src: hostname.wlan
+    dest: "/etc/hostname.{{item}}"
+    owner: root
+    group: wheel
+    mode: 0640
+  with_items:
+    - "{{network.wlan_if}}"
+  become: true
+  become_method: doas
+
 - name: Initialize internet hostname.if files
   template:
     src: hostname.internet
@@ -35,10 +47,6 @@
     - "{{network.vether_if}}"
   become: true
   become_method: doas
-  # FIXME doesn't work
-  #  notify:
-  #    - restart network
-  #
 
 # XXX These should be parameterized
 - name: Adjust sysctl values
