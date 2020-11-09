@@ -1,0 +1,8 @@
+---
+- name:
+  copy:
+    src: obsd_desktop_sysctl.conf
+    dest: /etc/sysctl.conf
+  become_method: doas
+  become: true
+  when: ansible_system == "OpenBSD"
