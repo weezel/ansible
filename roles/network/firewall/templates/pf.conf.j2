@@ -56,12 +56,12 @@ pass in log on egress inet proto tcp from any to ($INTERNET) \
 	 max-src-conn-rate 50/5, overload <blacklist> flush global)
 
 # Internet -> SSH -> myserver
-pass in log on egress inet proto tcp from any to ($INTERNET) \
-        port 10022 rdr-to myserver.local.lan port ssh \
-        $TCPSTATE \
-        (pflow, \
-         max-src-conn-rate 3/10, \
-	 overload <blacklist> flush global)
+#pass in log on egress inet proto tcp from any to ($INTERNET) \
+#        port 10022 rdr-to myserver.local.lan port ssh \
+#        $TCPSTATE \
+#        (pflow, \
+#         max-src-conn-rate 3/10, \
+#	 overload <blacklist> flush global)
 
 #### Internet OUT
 pass out log on egress inet $TCPSTATE (pflow)
