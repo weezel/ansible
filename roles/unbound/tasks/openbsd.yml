@@ -18,7 +18,7 @@
 
 - name: Store current name servers in variable
   set_fact:
-    ext_resolvers: "{{nameservers.stdout.split('\n')|default('8.8.8.8')}}"
+    ext_resolvers: "{{nameservers.stdout.split('\n')|default('1.1.1.1')}}"
 
 - name: Copy Unbound configuration
   template:
