@@ -1,2 +1,2 @@
 description "COMBINED-LAN"
-inet {{network.router_ip_addr}} {{network.subnet}} {{network.broadcast}}
+inet {{network.router_ip_addr}} {{network.netmask}} {{network.broadcast}}
