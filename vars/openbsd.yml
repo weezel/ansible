@@ -3,8 +3,9 @@ sysctl: [
   {name: 'kern.pool_debug', value: 0},
   {name: 'machdep.allowaperture', value: 0},
   {name: 'net.inet.ip.forwarding', value: 1},
-  {name: 'net.inet.ip.ifq.maxlen', value: 4096}
+  {name: 'net.inet.ip.maxqueue', value: 600},
+  {name: 'net.inet.ip.arpq.maxlen', value: 150}
 ]
 
 pf:
-  uplink_bw: "50 Mbps"
+  uplink_bw: "112 Mbps"
