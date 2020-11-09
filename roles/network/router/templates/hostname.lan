@@ -1,2 +1,4 @@
+-inet6
 description "LAN"
+mtu 9000
 up

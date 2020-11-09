@@ -1,2 +1,3 @@
+-inet6
 description "COMBINED-LAN"
 inet {{network.router_ip_addr}} {{network.netmask}} {{network.broadcast}}
