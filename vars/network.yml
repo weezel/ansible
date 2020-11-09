@@ -2,10 +2,10 @@
 ip_stub: "192.168.222."
 
 network:
-  domain_name: "severi.lan"
+  domain_name: "local.lan"
 
-  internet_if: ["em0"]
-  lan_if: ["em1", "em2"]
+  internet_if: ["em2"]
+  lan_if: ["em0", "em1"]
 
   bridge_if: ["bridge0"]
   vether_if: ["vether0"]
