@@ -1,0 +1,5 @@
+-inet6
+parent {{ network.wlan_if[0] }} vnetid 100
+description "WLAN-LAB"
+inet 192.168.230.1 255.255.255.0 192.168.230.255
+up

@@ -1,0 +1,20 @@
+option domain-name "lablan";
+option domain-name-servers 1.1.1.1, 1.0.0.1;
+option broadcast-address 192.168.230.255;
+
+subnet 192.168.230.0 netmask 255.255.255.0 {
+	option routers 192.168.230.1;
+
+	range 192.168.230.100 192.168.230.120;
+
+{% for h in vlan100_hosts %}
+	host {{h.name}} {
+		option host-name "{{h.name}}";
+		hardware ethernet {{h.mac | hwaddr}};
+		fixed-address {{h.ip_addr | ipv4}};
+	}
+
+{% endfor %}
+
+}
+

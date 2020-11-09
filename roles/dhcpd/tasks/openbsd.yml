@@ -8,43 +8,40 @@
       set_fact:
         vether_mac: "{{vether_mac_output.stdout.split('\n')|default('aa:bb:cc:dd')}}"
 
-- name: Enable dhcpd
-  command: "rcctl enable dhcpd"
+- name: Dhcpd for {{ network.vether_if[0] }}
+  block:
+  - name: Enable dhcpd
+    command: "rcctl enable dhcpd"
+  - name: Configure dhcpd for {{ network.vether_if[0] }} 
+    command: "rcctl set dhcpd flags {{ network.vether_if[0] }}"
   become: true
   become_method: doas
-  tags:
-    - dhcpd
 
-- name: Configure dhcpd in /etc/rc.conf.local
-  command: "rcctl set dhcpd flags {{ network.vether_if[0] }}"
+- name: Dhcpd for {{ network.vlan_ifs[0] }}
+  block:
+  - name: Create soft link from dhcpd rc.d
+    file:
+      src: /etc/rc.d/dhcpd
+      dest: /etc/rc.d/dhcpd_vlan100
+      state: link
+  - name: Enable dhcpd for {{ network.vlan_ifs[0] }}
+    command: "rcctl enable dhcpd_vlan100"
+  - name: Configure dhcpd for {{ network.vlan_ifs[0] }} 
+    command: "rcctl set dhcpd flags {{ network.vlan_ifs[0] }}"
   become: true
   become_method: doas
-  tags:
-    - dhcpd
 
-- name: Upload dhcpd.conf
+- name: Upload conf files
   template:
-    src: dhcpd.conf.j2
-    dest: /etc/dhcpd.conf
+    src: item.key
+    dest: item.value
     owner: root
     group: wheel
     mode: 0640
+  loop:
+    - { "dhcpd.conf.j2": "/etc/dhcpd.conf" }
+    - { "dhcpd_vlan100.conf.j2": "/etc/dhcpd_vlan100.conf" }
   become: true
   become_method: doas
-  # FIXME why doesn't this work?
-  #  notify:
-  #    - restart dhcpd
-  tags:
-    - dhcpd
-
-# XXX Cannot enable before network configuration has been copmleted
-  #- name: Restart dhcpd
-  #  service:
-  #    name: dhcpd
-  #    state: restarted
-  #  become: true
-  #  become_method: doas
-  #  tags:
-  #    - dhcpd
-
+  tags: tada
 

@@ -7,10 +7,10 @@ network:
   lan_if: ["em0"]
   wlan_if: ["em1"]
   internet_if: ["em2"]
+  vlan_ifs: ["vlan100"]
 
   bridge_if: ["bridge0"]
   vether_if: ["vether0"]
-
   pflow_if: ["pflow0"]
 
   router_hostname: "fw"
@@ -26,7 +26,3 @@ network:
 
 network_bridge_devs: "{{network.lan_if + network.wlan_if + network.vether_if}}"
 
-static_hosts:
-  - name: "host1"
-    mac: "ff:00:ff:00:ff:00"
-    ip_addr: "{{ip_stub + '11'}}"
