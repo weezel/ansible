@@ -7,7 +7,7 @@
   block:
   - name: Enable dhcpd
     command: "rcctl enable dhcpd"
-  - name: Configure dhcpd for {{ network.vether_if[0] }} 
+  - name: Configure dhcpd for {{ network.vether_if[0] }}
     command: "rcctl set dhcpd flags {{ network.vether_if[0] }}"
   become: true
   become_method: doas
@@ -21,8 +21,8 @@
       state: link
   - name: Enable dhcpd for {{ network.vlan_ifs[0] }}
     command: "rcctl enable dhcpd_vlan100"
-  - name: Configure dhcpd for {{ network.vlan_ifs[0] }} 
-    command: "rcctl set dhcpd_vlan100 flags {{ network.vlan_ifs[0] }}"
+  - name: Configure dhcpd for {{ network.vlan_ifs[0] }}
+    command: "rcctl set dhcpd_vlan100 flags {{ network.vlan_ifs[0] }} -c /etc/dhcpd_vlan100.conf"
   become: true
   become_method: doas
 
