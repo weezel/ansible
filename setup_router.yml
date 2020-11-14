@@ -12,7 +12,7 @@
     - vars/packages.yml
     - vars/openbsd.yml
     - vars/user.yml
-    - vars/vault/{{ dst_host_name }}.yml
+    - vars/secrets/{{ dst_host_name }}.yml
   vars:
     - server_install: true
     - ip_stub: "192.168.222."
