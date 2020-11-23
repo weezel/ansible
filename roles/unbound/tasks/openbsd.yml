@@ -1,9 +1,4 @@
 ---
-- name: Generate control keys
-  command: unbound-control-setup
-  become: true
-  become_method: doas
-
 - name: Get root.hints file
   get_url:
     url: https://www.internic.net/domain/named.cache
@@ -18,7 +13,7 @@
 
 - name: Store current name servers in variable
   set_fact:
-    ext_resolvers: "{{nameservers.stdout.split('\n')|default('1.1.1.1')}}"
+    ext_resolvers: "{{ nameservers.stdout.split('\n')|default('1.1.1.1') }}"
 
 - name: Copy Unbound configuration
   template:

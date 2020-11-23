@@ -1,46 +1,58 @@
 # {{ansible_managed}}
 server:
 	num-threads: 2
-	interface: {{network.router_ip_addr}}
+	interface: {{ network.router_ip_addr }}
 	interface: 127.0.0.1
-	access-control: {{network.cidr_addr}} allow
+	do-ip6: no
+	#access-control: 0.0.0.0/0 refuse
+	access-control: {{ network.cidr_addr }} allow
 	do-not-query-localhost: no
 	hide-identity: yes
 	hide-version: yes
 	root-hints: "/var/unbound/etc/root.hints"
 
-	private-domain: "{{network.domain_name}}."
+	# Perform DNSSEC validation.
+	#
+	auto-trust-anchor-file: "/var/unbound/db/root.key"
+	val-log-level: 2
+	# Synthesize NXDOMAINs from DNSSEC NSEC chains.
+	# https://tools.ietf.org/html/rfc8198
+	#
+	aggressive-nsec: yes
 
-	local-zone: "{{network.subnet.split('.')[0]}}.in-addr.arpa." transparent
+	# Use TCP for "forward-zone" requests. Useful if you are making
+	# DNS requests over an SSH port forwarding.
+	#
+	#tcp-upstream: yes
 
-	local-data: "{{network.router_hostname}}.{{network.domain_name}}		IN A	{{network.router_ip_addr}}"
-	local-data-ptr: "{{network.router_ip_addr}}	{{network.router_hostname}}.{{network.domain_name}}"
+	private-domain: "{{ network.domain_name }}."
 
+	local-zone: "{{ network.subnet.split('.')[0] }}.in-addr.arpa." transparent
+
+	local-data: "{{ network.router_hostname }}.{{ network.domain_name }}		IN A	{{ network.router_ip_addr | ipv4}}"
+	local-data-ptr: "{{ network.router_ip_addr }}	{{ network.router_hostname }}.{{ network.domain_name }}"
+
+  # Hosts section
 {% for h in static_hosts %}
-	local-data: "{{h.name}}.{{network.domain_name}}		IN A	{{h.ip_addr}}"
-	local-data-ptr: "{{h.ip_addr}}	{{h.name}}.{{network.domain_name}}"
+	local-data: "{{ h.name }}.{{ network.domain_name }}		IN A	{{ h.ip_addr | ipv4}}"
+	local-data-ptr: "{{ h.ip_addr | ipv4 }}	{{ h.name }}.{{ network.domain_name }}"
 
 {% endfor %}
 forward-zone:
 	name: "."
 {% for r in ext_resolvers %}
-	forward-addr: {{r}}
+	forward-addr: {{ r }}
 {% endfor %}
 
 forward-zone:
-	name: "{{network.domain_name}}."
-	forward-addr: {{network.router_ip_addr}}
+	name: "{{ network.domain_name }}."
+	forward-addr: {{ network.router_ip_addr | ipv4 }}
 
 #forward-zone:
 #	name: "192.in-addr.arpa."
-#	forward-addr: {{network.router_ip_addr}}
+#	forward-addr: {{ network.router_ip_addr }}
 
 remote-control:
 	control-enable: yes
-	control-interface: 127.0.0.1
-	server-key-file: "/var/unbound/etc/unbound_server.key"
-	server-cert-file: "/var/unbound/etc/unbound_server.pem"
-
-	control-key-file: "/var/unbound/etc/unbound_server.key"
-	control-cert-file: "/var/unbound/etc/unbound_server.pem"
+	control-interface: /var/run/unbound.sock
 
