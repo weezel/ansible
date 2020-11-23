@@ -1,6 +1,6 @@
 ---
 # Usage:
-#   ansible-playbook -i 192.168.1.1, setup_router.yml -C
+#   ansible-playbook -i 192.168.1.1, -e dst_hostname=fw setup_router.yml -C
 # Needed pre-steps
 # 1. Configure doas.conf
 # 2. Configure /etc/installurl
@@ -12,7 +12,7 @@
     - vars/packages.yml
     - vars/openbsd.yml
     - vars/user.yml
-    - vars/secrets/{{ dst_host_name }}.yml
+    - vars/secrets/{{ dst_hostname }}.yml
   vars:
     - server_install: true
     - ip_stub: "192.168.222."
