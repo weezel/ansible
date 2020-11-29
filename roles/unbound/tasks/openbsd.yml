@@ -7,13 +7,13 @@
   become: true
   become_method: doas
 
-- name: Get current name servers
-  command: awk '$1 ~ "^nameserver$" {print $2}' /etc/resolv.conf
-  register: nameservers
-
-- name: Store current name servers in variable
-  set_fact:
-    ext_resolvers: "{{ nameservers.stdout.split('\n')|default('1.1.1.1') }}"
+- name: Fetch root.hints monthly
+  cron:
+    name: "Fetch root.hints"
+    special_time: monthly
+    job: /usr/bin/ftp -o /var/unbound/etc/root.hints https://www.internic.net/domain/named.cache 2&>1 >/dev/null
+  become: true
+  become_method: doas
 
 - name: Copy Unbound configuration
   template:
@@ -25,10 +25,30 @@
   become: true
   become_method: doas
 
+- name: Validite unbound.conf
+  command: "unbound-checkconf"
+  become: true
+  become_method: doas
+
 - name: Enable Unbound
   command: rcctl enable unbound
   become: true
   become_method: doas
+
+- block:
+  - name: Supersede ISP's name servers
+    lineinfile:
+      path: "/etc/dhclient.conf"
+      line: "supersede domain-name-servers 127.0.0.1;"
+      state: present
+      create: yes
+      owner: root
+      group: wheel
+      mode: 0644
+  - name: Validate dhclient.conf
+    command: "dhclient -n -c /etc/dhclient.conf {{ network.internet_if[0] }}"
+    become: true
+    become_method: doas
 
 # XXX Cannot enable before network configuration has been copmleted
   #- name: Restart Unbound

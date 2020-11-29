@@ -3,18 +3,24 @@ server:
 	num-threads: 2
 	interface: {{ network.router_ip_addr }}
 	interface: 127.0.0.1
+	#interface: 127.0.0.1@5353
 	do-ip6: no
 	#access-control: 0.0.0.0/0 refuse
+	access-control: 127.0.0.1/8 allow
 	access-control: {{ network.cidr_addr }} allow
 	do-not-query-localhost: no
 	hide-identity: yes
 	hide-version: yes
+
+	edns-buffer-size: 1232
+
 	root-hints: "/var/unbound/etc/root.hints"
 
 	# Perform DNSSEC validation.
 	#
 	auto-trust-anchor-file: "/var/unbound/db/root.key"
 	val-log-level: 2
+
 	# Synthesize NXDOMAINs from DNSSEC NSEC chains.
 	# https://tools.ietf.org/html/rfc8198
 	#
@@ -37,11 +43,6 @@ server:
 	local-data: "{{ h.name }}.{{ network.domain_name }}		IN A	{{ h.ip_addr | ipv4}}"
 	local-data-ptr: "{{ h.ip_addr | ipv4 }}	{{ h.name }}.{{ network.domain_name }}"
 
-{% endfor %}
-forward-zone:
-	name: "."
-{% for r in ext_resolvers %}
-	forward-addr: {{ r }}
 {% endfor %}
 
 forward-zone:
