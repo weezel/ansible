@@ -22,7 +22,7 @@
   - name: Enable dhcpd for {{ network.vlan_ifs[0] }}
     command: "rcctl enable dhcpd_vlan100"
   - name: Configure dhcpd for {{ network.vlan_ifs[0] }}
-    command: "rcctl set dhcpd_{{ network.vlan_ifs[0] }} flags -c /etc/dhcpd_{{ network.vlan_ifs[0] }}.conf {{ network.vlan_ifs[0] }}"
+    command: "rcctl set dhcpd_{{ network.vlan_ifs[0] }} flags -c /etc/dhcpd_{{ network.vlan_ifs[0] }}.conf -l /var/db/dhcpd_{{ network.vlan_ifs[0] }}.leases {{ network.vlan_ifs[0] }}"
   become: true
   become_method: doas
 
