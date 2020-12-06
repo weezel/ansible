@@ -1,0 +1,14 @@
+daemon=900                              # check every 300 seconds
+syslog=yes                              # log update msgs to syslog
+mail=root                               # mail all msgs to root
+mail-failure=root                       # mail failed update msgs to root
+pid=/var/run/ddclient/ddclient.pid      # record PID in file.
+ssl=yes                                 # use ssl-support.  Works with
+                                        # ssl-library
+                                        # new IP is added as argument.
+use=web, web=dynamicdns.park-your-domain.com/getip
+protocol=namecheap
+server=dynamicdns.park-your-domain.com
+login={{ ddclient.login }}
+password={{ ddclient.password }}
+@

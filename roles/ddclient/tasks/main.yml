@@ -1,0 +1,26 @@
+---
+- name: Install ddclient
+  package:
+    name: ddclient
+    state: latest
+  become: true
+  become_method: doas
+
+- name: Upload ddclient.conf
+  template:
+    src: ddclient.conf.j2
+    dest: /etc/ddclient/ddclient.conf
+    owner: _ddclient
+    group: wheel
+    mode: 0644
+  become: true
+  become_method: doas
+
+- name: Start ddclient
+  service:
+    name: ddclient
+    enabled: yes
+    state: started
+  become: true
+  become_method: doas
+
