@@ -93,6 +93,10 @@ match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=message .* to=.*@.*" igno
 match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp event=message address=local host=.* .*" ignore
 match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp message address=local host=.* .*" ignore
 
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp message msgid=[a-zA-Z0-9]+ size=[0-9]+ nrcpt=[0-9]+ proto=ESMTP" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp envelope.*from=<.*@{{ dst_hostname }}.{{ network.domain_name }}> to=<root@{{ network.domain_name }}>" ignore
+match in mail "smtpd\\[[0-9]*\\]: [a-z0-9]+ smtp disconnected reason=quit" ignore
+
 # sshd
 # sshd context rules
 # messages that match contexts fall through to following rules.
