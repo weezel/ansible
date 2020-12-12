@@ -19,13 +19,17 @@
     - ip_stub: "192.168.222."
     - network:
         - domain_name: "local.lan"
+    - use_gmail: false
 
   roles:
     - { role: default_packages, tags: packages }
     - { role: dotconfigs, tags: configs }
     - { role: network/router, tags: router }
     - { role: dhcpd, tags: dhcpd }
-    - { role: unbound, tags: dns }
+    - { role: unbound, tags: unbound }
     - { role: ddclient, tags: ddclient }
     - { role: network/firewall, tags: pf }
+    - { role: fdm, tags: fdm }
+    - { role: mutt, tags: mutt }
+    - { role: logfmon, tags: logfmon }
 

@@ -1,14 +1,14 @@
 ---
-- name: Install/update neomutt (Linux)
+- name: Install/update mutt (Linux)
   package:
-    name: neomutt
+    name: mutt
     state: latest
   become: true
   when: ansible_system == "Linux"
 
-- name: Install/update neomutt (OpenBSD)
+- name: Install/update mutt (OpenBSD)
   package:
-    name: neomutt--
+    name: mutt--
     state: latest
   become: true
   become_method: doas
