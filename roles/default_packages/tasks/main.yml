@@ -6,6 +6,3 @@
 - include: openbsd.yml
   when: ansible_os_family == "OpenBSD"
 
-- include: centos.yml
-  when: ansible_os_family == "RedHat"
-

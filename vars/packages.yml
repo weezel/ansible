@@ -14,22 +14,6 @@ packages:
     'tree'
   ]
 
-  centos: [
-    'dstat',
-    'mtr',
-    'nmap',
-    'ntpdate',
-    'openssh-server',
-    'policycoreutils-python',
-    'rsync',
-    'strace',
-    'tcpdump',
-    'the_silver_searcher',
-    'tmux',
-    'which',
-    'whois'
-  ]
-
   ubuntu: [
     'dstat',
     'mtr-tiny',
