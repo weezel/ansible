@@ -10,7 +10,7 @@ file "/var/log/authlog" tag auth
 file "/var/log/daemon" tag daemon
 #file "/var/www/logs/error.log" tag nginx
 
-match in * "last message repeated [0-9] times" ignore
+match in * "last message repeated [0-9]+ times" ignore
 
 # newsyslog
 match in * "newsyslog\\[[0-9]*\\]: logfile turned over" ignore
