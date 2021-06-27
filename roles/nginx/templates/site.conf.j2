@@ -1,5 +1,5 @@
 server {
-	listen	80;
+	listen 80;
 	server_name {{site_name}} www.{{site_name}};
 
 {% if ansible_system == "Linux" %}
@@ -28,7 +28,7 @@ server {
 }
 
 server {
-	listen	443 default_server ssl;
+	listen 443 default_server ssl http2;
 	server_name {{site_name}} www.{{site_name}};
 
 {% if ansible_system == "Linux" %}
@@ -44,26 +44,35 @@ server {
 {% if nginx_cert_type == "letsencrypt" %}
 	ssl_certificate     /etc/ssl/nginx/{{site_name}}/fullchain.pem;
 	ssl_certificate_key /etc/ssl/nginx/{{site_name}}/privkey.pem;
+	# OCSP stapling
+	ssl_stapling on;
+	ssl_stapling_verify on;
+	# TODO verify chain of trust of OCSP response using Root CA and Intermediate certs
+	#ssl_trusted_certificate /path/to/root_CA_cert_plus_intermediates;
 {% elif nginx_cert_type == "self-signed" %}
 	ssl_certificate     /etc/ssl/nginx/{{site_name}}.crt;
 	ssl_certificate_key /etc/ssl/nginx/private/{{site_name}}.key;
 {% endif %}
 
 	# https://www.ssllabs.com/ssltest/analyze.html
-	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
-	ssl_prefer_server_ciphers on;
+	# https://ssl-config.mozilla.org/
 	ssl_dhparam /etc/ssl/dhparam.pem;
-	ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256;
 	ssl_session_timeout 1d;
-	ssl_session_cache shared:SSL:50m;
-	ssl_stapling on;
-	ssl_stapling_verify on;
+	ssl_session_cache shared:MozSSL:10m;  # about 40000 sessions
+	ssl_session_tickets off;
+	# modern configuration
+	ssl_protocols TLSv1.3;
+	ssl_prefer_server_ciphers off;
+	# HSTS (ngx_http_headers_module is required) (63072000 seconds)
+	add_header Strict-Transport-Security "max-age=63072000" always;
+
 	# https://securityheaders.com/
 	add_header Feature-Policy none;
-	add_header Strict-Transport-Security max-age=15768000;
 	add_header X-Content-Type-Options "nosniff" always;
 	add_header X-Frame-Options DENY;
-	add_header Referrer-Policy: no-referrer
+	add_header Content-Security-Policy "default-src 'self';" always;
+	add_header Referrer-Policy no-referrer;
+	add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
 
 	root /var/www/htdocs/{{site_name}};
 	index index.php index.html index.htm;
