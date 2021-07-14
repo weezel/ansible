@@ -88,19 +88,11 @@ server {
 	}
 
 	location / {
-{% if nginx_uwsgi == true %}
-	{% if nginx_reverse_proxy == true %}
-		proxy_set_header Host $host;
-		proxy_set_header X-Real-IP $remote_addr;
-	{% endif %}
-		include uwsgi_params;
-		uwsgi_pass unix:/var/www/{{site_name}}.sock;
-{% else %}
-		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
+		# First attempt to serve request as file,
+		# then as directory,
+		# and finally fall back to displaying a 404.
 		#try_files $uri $uri/ /index.html;
 		try_files $uri $uri/ /index.php?args;
-{% endif %}
 	}
 
 	location /static {
@@ -131,29 +123,13 @@ server {
 	#	root /usr/share/nginx/www;
 	#}
 
-	location ~ \.php$ {
 {% if nginx_reverse_proxy == true %}
-		proxy_set_header Host $host;
+	location /my-app {
 		proxy_set_header X-Real-IP $remote_addr;
-{% endif %}
-		#include fastcgi.conf;
-		fastcgi_intercept_errors on;
-		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		# NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
-		fastcgi_split_path_info ^(.+?\.php)(/.*)$;
-		if (!-f $document_root$fastcgi_script_name) {
-			return 404;
-		}
-
-{% if ansible_system == "Linux" %}
-		fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
-{% elif ansible_system == "OpenBSD" %}
-		fastcgi_pass unix:/var/www/run/php-fpm.sock;
-{% endif %}
-		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		fastcgi_param HTTP_PROXY "";
-		fastcgi_index index.php;
-		include fastcgi_params;
+		proxy_set_header X-Forwarded-For $remote_addr;
+		proxy_set_header Host $host;
+		proxy_pass http://127.0.0.1:8888/my-app;
 	}
+{% endif %}
 }
 
