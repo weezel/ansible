@@ -1,0 +1,11 @@
+---
+- name: Install packages
+  ansible.builtin.package:
+    name: "{{item}}"
+    state: latest
+    update_cache: yes
+  loop: "{{packages.common + packages.manjaro|flatten(levels=1)}}"
+  become: true
+  tags:
+    - packages
+

@@ -9,7 +9,7 @@
     - docker
     - sudo
   become: yes
-  when: ansible_system == "Linux"
+  when: ansible_system == "Linux" and distribution is defined and distribution == "Ubuntu"
 
 - name: Configure interface names
   import_tasks: interface_names.yml
