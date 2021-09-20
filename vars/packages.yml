@@ -154,6 +154,7 @@ packages:
   ]
 
   obsd_server: [
+    'nfdump',
     'vnstat',
     'vim--no_x11-perl-python3-ruby'
   ]

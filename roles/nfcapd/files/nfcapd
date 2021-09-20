@@ -1,0 +1,10 @@
+#!/bin/ksh
+
+daemon="/usr/local/bin/nfcapd"
+daemon_flags="-u _nfcapd -g _nfcapd -b 127.0.0.1 -p 9995 -l /var/cache/nfcapd -S 0 -D"
+
+. /etc/rc.d/rc.subr
+
+pexp="${daemon} ${daemon_flags}"
+
+rc_cmd $1

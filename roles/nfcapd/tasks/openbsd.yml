@@ -1,0 +1,45 @@
+---
+- name: Install package
+  package:
+    name: nfdump
+    state: present
+  become: true
+  become_method: doas
+
+- name: Create dir for nfcapd
+  file:
+    path: /var/cache/nfcapd
+    owner: _nfcapd
+    group: _nfcapd
+    mode: 0750
+    state: directory
+  register: created_dir
+  become: true
+  become_method: doas
+
+- name: Copy daemon rc file
+  copy:
+    src: nfcapd
+    dest: /etc/rc.d/nfcapd
+    owner: root
+    group: bin
+    mode: 0755
+  become: true
+  become_method: doas
+
+- name: Set cleanup cron
+  cron:
+    name: "Clean nfcapd old entries"
+    special_time: daily
+    job: "/usr/local/bin/nfexpire -e /var/cache/nfcapd -t 4w 2>&1 >/dev/null"
+  become: true
+  become_method: doas
+
+- name: Start nfcapd
+  service:
+    name: nfcapd
+    state: restarted
+    enabled: yes
+  become: true
+  become_method: doas
+

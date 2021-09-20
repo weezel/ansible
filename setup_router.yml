@@ -32,4 +32,5 @@
     - { role: fdm, tags: fdm }
     - { role: mutt, tags: mutt }
     - { role: logfmon, tags: logfmon }
+    - { role: nfcapd, tags: nfcapd }
 
