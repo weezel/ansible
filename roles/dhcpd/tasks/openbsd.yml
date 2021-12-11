@@ -5,24 +5,24 @@
 
 - name: Dhcpd for {{ network.vether_if[0] }}
   block:
-  - name: Enable dhcpd
-    command: "rcctl enable dhcpd"
-  - name: Configure dhcpd for {{ network.vether_if[0] }}
-    command: "rcctl set dhcpd flags {{ network.vether_if[0] }}"
+    - name: Enable dhcpd
+      command: "rcctl enable dhcpd"
+    - name: Configure dhcpd for {{ network.vether_if[0] }}
+      command: "rcctl set dhcpd flags {{ network.vether_if[0] }}"
   become: true
   become_method: doas
 
 - name: Dhcpd for {{ network.vlan_ifs[0] }}
   block:
-  - name: Create soft link from dhcpd rc.d
-    file:
-      src: /etc/rc.d/dhcpd
-      dest: /etc/rc.d/dhcpd_vlan100
-      state: link
-  - name: Enable dhcpd for {{ network.vlan_ifs[0] }}
-    command: "rcctl enable dhcpd_vlan100"
-  - name: Configure dhcpd for {{ network.vlan_ifs[0] }}
-    command: "rcctl set dhcpd_{{ network.vlan_ifs[0] }} flags -c /etc/dhcpd_{{ network.vlan_ifs[0] }}.conf -l /var/db/dhcpd_{{ network.vlan_ifs[0] }}.leases {{ network.vlan_ifs[0] }}"
+    - name: Create soft link from dhcpd rc.d
+      file:
+        src: /etc/rc.d/dhcpd
+        dest: /etc/rc.d/dhcpd_vlan100
+        state: link
+    - name: Enable dhcpd for {{ network.vlan_ifs[0] }}
+      command: "rcctl enable dhcpd_vlan100"
+    - name: Configure dhcpd for {{ network.vlan_ifs[0] }}
+      command: "rcctl set dhcpd_{{ network.vlan_ifs[0] }} flags -c /etc/dhcpd_{{ network.vlan_ifs[0] }}.conf -l /var/db/dhcpd_{{ network.vlan_ifs[0] }}.leases {{ network.vlan_ifs[0] }}"
   become: true
   become_method: doas
 
@@ -38,5 +38,4 @@
     - { src: "dhcpd_vlan100.conf.j2", dst: "/etc/dhcpd_vlan100.conf" }
   become: true
   become_method: doas
-  tags: tada
 
