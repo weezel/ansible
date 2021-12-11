@@ -1,8 +1,7 @@
 *.o
 *.pyc
 *.retry
-.vagrant
-Vagrantfile
+.idea/
 hosts.ini
 localfacts
 obsdetc
