@@ -1,0 +1,9 @@
+- name: Allow webcam access
+  file:
+    path: /dev/video0
+    owner: {{ user.nickname }}
+    group: wheel
+  become: yes
+  become_method: doas
+  when: ansible_system == "OpenBSD"
+
