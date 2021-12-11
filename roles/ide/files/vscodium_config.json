@@ -1,0 +1,20 @@
+{
+    "editor.acceptSuggestionOnCommitCharacter": false,
+    "editor.autoClosingBrackets": "never",
+    "editor.autoClosingOvertype": "never",
+    "editor.autoClosingQuotes": "never",
+    "editor.cursorBlinking": "solid",
+    "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
+    "editor.insertSpaces": false,
+    "editor.parameterHints.enabled": false,
+    "editor.quickSuggestions": false,
+    "editor.quickSuggestionsDelay": 99999,
+    "editor.renderWhitespace": "trailing",
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.tabSize": 8,
+    "explorer.confirmDragAndDrop": false,
+    "go.formatTool": "goimports",
+    "go.useLanguageServer": true,
+    "workbench.startupEditor": "none",
+    "window.zoomLevel": 1
+}

@@ -1,0 +1,22 @@
+---
+- name: Copy VSCodium configuration file over
+  ansible.builtin.copy:
+    src: "vscodium_config.json"
+    dest: "{{ ansible_user_dir }}/.config/VSCodium/User/settings.json"
+  tags:
+    - vscodium
+
+- name: PyCharm configurations
+  block:
+    - name: Ensure PyCharm temporary configuration directory exists
+      ansible.builtin.file:
+        path: "{{ ansible_user_dir }}/pycharm-settings"
+        state: directory
+
+    - name: Copy PyCharm configuration files over
+      ansible.builtin.unarchive:
+        src: "pycharm_settings.zip"
+        dest: "{{ ansible_user_dir }}/pycharm-settings/"
+  tags:
+    - pycharm
+
