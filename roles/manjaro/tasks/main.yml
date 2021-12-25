@@ -1,0 +1,3 @@
+---
+- include: lightdm.yml
+  when: ansible_os_family == "ArchLinux"

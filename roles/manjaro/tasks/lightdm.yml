@@ -1,0 +1,21 @@
+---
+- name: "Disable VNC"
+  lineinfile:
+    path: /etc/lightdm/lightdm.conf
+    insertafter: "^\\[VNCServer\\]$"
+    line: "enabled=false"
+    state: present
+  become: true
+
+- name: "Fix LightDM login screen issues"
+  blockinfile:
+    path: /etc/lightdm/lightdm.conf
+    block: |
+      [LightDM]
+      logind-check-graphical=true
+    marker: ""
+    marker_begin: ""
+    marker_end: ""
+    state: present
+  become: true
+
