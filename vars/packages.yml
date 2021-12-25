@@ -48,6 +48,7 @@ packages:
     'the_silver_searcher',
     'tmux',
     'ttf-hack',
+    'unzip',
     'whois',
     'wireshark-qt',
     'xclip'

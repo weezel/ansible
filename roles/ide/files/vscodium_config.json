@@ -3,6 +3,7 @@
     "editor.autoClosingBrackets": "never",
     "editor.autoClosingOvertype": "never",
     "editor.autoClosingQuotes": "never",
+    "telemetry.enableCrashReporter": false,
     "editor.cursorBlinking": "solid",
     "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.insertSpaces": false,
@@ -15,6 +16,8 @@
     "explorer.confirmDragAndDrop": false,
     "go.formatTool": "goimports",
     "go.useLanguageServer": true,
+    "telemetry.enableTelemetry": false,
+    "telemetry.telemetryLevel": "off",
     "workbench.startupEditor": "none",
     "window.zoomLevel": 1
 }
