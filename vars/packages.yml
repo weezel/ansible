@@ -30,6 +30,7 @@ packages:
     'go',
     'gsimplecal',
     'gvim',
+    'imwheel'
     'kdiff3',
     'keepassxc',
     'mpv',
