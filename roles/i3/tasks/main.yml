@@ -13,4 +13,3 @@
   copy:
     src: "i3status_{{ ansible_os_family | lower }}.conf"
     dest: "{{ ansible_user_dir }}/.i3status.conf"
-

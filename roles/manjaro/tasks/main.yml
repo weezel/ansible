@@ -1,3 +1,9 @@
 ---
 - include_tasks: lightdm.yml
   when: ansible_os_family == "ArchLinux"
+
+- name: "Copy picom configuration over"
+  copy:
+    src: picom.conf
+    dest: "{{ ansible_user_dir }}/.picom.conf"
+    mode: 0600
