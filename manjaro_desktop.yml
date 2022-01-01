@@ -1,3 +1,5 @@
+# Running this playbook:
+#   ansible-playbook -v -i localhost, --connection=local ubuntu_desktop.yml
 ---
 - hosts: all
   vars_files:
@@ -11,10 +13,13 @@
     - { role: default_packages }
     - { role: dotconfigs }
 
-    - { role: sleepconfig }
-    - { role: git }
-    - { role: fstrim }
-    - { role: xorg_zap }
-    - { role: i3 }
-    - { role: xsession }
-    - { role: linux }
+    - { role: sleepconfig, tags: sleepconfig }
+    - { role: git, tags: git }
+    - { role: fstrim, tags: fstrim }
+    - { role: xorg_zap, tags: xorg_zap }
+    - { role: i3, tags: i3 }
+    - { role: xsession, tags: xsession }
+    - { role: linux, tags: linux }
+    - { role: manjaro, tags: manjaro }
+    - { role: ide, tags: ide }
+
