@@ -6,11 +6,11 @@
 
 - name: Copy i3 config file over
   copy:
-    src: "i3_{{ ansible_system | lower }}.config"
+    src: "i3_{{ ansible_os_family | lower }}.config"
     dest: "{{ ansible_user_dir }}/.config/i3/config"
 
 - name: Copy i3status file over
   copy:
-    src: "i3status_{{ ansible_system | lower }}.conf"
+    src: "i3status_{{ ansible_os_family | lower }}.conf"
     dest: "{{ ansible_user_dir }}/.i3status.conf"
 

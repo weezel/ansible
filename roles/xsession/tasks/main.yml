@@ -11,7 +11,7 @@
 
 - name: Create a soft-link for .xsession file (Linux)
   ansible.builtin.file:
-    src: "{{ ansible_user_dir }}/configs/xsession_{{ ansible_distribution | lower }}"
+    src: "{{ ansible_user_dir }}/configs/xsession_{{ ansible_os_family | lower }}"
     dest: "{{ ansible_user_dir }}/.xsession"
     state: link
   when: ansible_system == "Linux"

@@ -7,5 +7,5 @@
     group: root
     mode: '0744'
   become: yes
-  when: ansible_system == "Linux"
+  when: ansible_os_family == "Ubuntu"
 
