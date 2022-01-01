@@ -7,14 +7,23 @@
     state: present
   become: true
 
-- name: "Fix LightDM login screen issues"
-  blockinfile:
-    path: /etc/lightdm/lightdm.conf
-    block: |
-      [LightDM]
-      logind-check-graphical=true
-    marker: ""
-    marker_begin: ""
-    marker_end: ""
-    state: present
-  become: true
+- name: "Fix issues with too fast computer"
+  block:
+    - name: "Is LightDM fix already included"
+      command: grep -Fxq "logind-check-graphical" /etc/lightdm/lightdm.conf
+      register: lightdm_fix_included
+      changed_when: no
+      ignore_errors: true
+
+    - name: "Fix LightDM login screen issues"
+      blockinfile:
+        path: /etc/lightdm/lightdm.conf
+        block: |
+          [LightDM]
+          logind-check-graphical=true
+        marker: ""
+        marker_begin: ""
+        marker_end: ""
+        state: present
+      when: lightdm_fix_included.rc == 0
+      become: true
