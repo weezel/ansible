@@ -116,7 +116,6 @@ packages:
     'gnuwatch',
     'lynx',
     'mtr--',
-    'pkg_mgr',
     'pkglocatedb',
     'py3-neovim',
     'rsync--iconv',
