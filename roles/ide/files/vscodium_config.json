@@ -3,7 +3,6 @@
     "editor.autoClosingBrackets": "never",
     "editor.autoClosingOvertype": "never",
     "editor.autoClosingQuotes": "never",
-    "telemetry.enableCrashReporter": false,
     "editor.cursorBlinking": "solid",
     "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.insertSpaces": false,
@@ -20,9 +19,11 @@
     "go.lintFlags": [
         "--fast"
     ],
+    "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
     "telemetry.telemetryLevel": "off",
     "workbench.startupEditor": "none",
+    "workbench.tree.indent": 22,
     "terminal.integrated.fontSize": 12,
     "html.autoClosingTags": false,
     "window.zoomLevel": 0.2,
@@ -30,5 +31,11 @@
     "code-eol.highlightNonDefault": true,
     "code-eol.highlightExtraWhitespace": true,
     "code-eol.decorateBeforeEol": true,
-    "code-eol.newlineCharacter": " "
+    "code-eol.newlineCharacter": " ",
+    "workbench.enableExperiments": false,
+    "workbench.settings.enableNaturalLanguageSearch": false,
+    "timeline.excludeSources": [
+        "git-history"
+    ],
+    "workbench.iconTheme": "file-icons"
 }
