@@ -1,5 +1,5 @@
 # Running this playbook:
-#   ansible-playbook -v -i localhost, --connection=local ubuntu_desktop.yml
+#   ansible-playbook -v -i localhost, --connection=local manjaro_desktop.yml
 ---
 - hosts: all
   vars_files:
