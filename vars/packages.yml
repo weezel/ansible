@@ -39,6 +39,7 @@ packages:
     'mupdf',
     'net-tools',
     'noto-fonts-emoji',
+    'pa-applet',
     'pavucontrol',
     'picom',
     'pulseaudio-alsa',
