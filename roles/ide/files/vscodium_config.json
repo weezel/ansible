@@ -19,6 +19,9 @@
     "go.lintFlags": [
         "--fast"
     ],
+    "go.delveConfig": {
+        "showGlobalVariables": true,
+    },
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
     "telemetry.telemetryLevel": "off",
