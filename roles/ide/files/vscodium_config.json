@@ -12,6 +12,7 @@
     "editor.renderWhitespace": "trailing",
     "editor.suggestOnTriggerCharacters": false,
     "editor.tabSize": 8,
+    "editor.suggest.insertMode": "insert",
     "explorer.confirmDragAndDrop": false,
     "go.formatTool": "goimports",
     "go.useLanguageServer": true,
