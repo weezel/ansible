@@ -14,7 +14,7 @@
     "editor.tabSize": 8,
     "editor.suggest.insertMode": "insert",
     "explorer.confirmDragAndDrop": false,
-    "go.formatTool": "goimports",
+    "go.formatTool": "gofumpt",
     "go.useLanguageServer": true,
     "go.lintTool": "golangci-lint",
     "go.lintFlags": [
