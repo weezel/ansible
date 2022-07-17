@@ -11,6 +11,18 @@
   become: yes
   when: ansible_system == "Linux" and distribution is defined and distribution == "Ubuntu"
 
+- name: "Add {{ user.nickname }} to additional groups"
+  user:
+    name: "{{ user.nickname }}"
+    groups: "{{ item }}"
+    append: yes
+  loop:
+    - uucp
+    - docker
+    - sudo
+  become: yes
+  when: ansible_os_family == "Archlinux"
+
 - name: Configure interface names
   import_tasks: interface_names.yml
 
