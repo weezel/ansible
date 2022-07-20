@@ -17,6 +17,7 @@ packages:
   manjaro: [
     'adwaita-icon-theme',
     'alacritty',
+    'bash-completion',
     'binwalk',
     'chromium',
     'code',
