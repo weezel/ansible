@@ -44,6 +44,7 @@ packages:
     'pa-applet',
     'pavucontrol',
     'picom',
+    'pkgfile',
     'postgresql-libs',
     'pulseaudio-alsa',
     'pycharm-community-edition',
