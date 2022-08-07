@@ -11,6 +11,7 @@
     "editor.quickSuggestionsDelay": 99999,
     "editor.renderWhitespace": "trailing",
     "editor.suggestOnTriggerCharacters": false,
+    "editor.rulers": [ 120 ],
     "editor.tabSize": 8,
     "editor.suggest.insertMode": "insert",
     "explorer.confirmDragAndDrop": false,
