@@ -22,3 +22,11 @@
     state: started
     enabled: yes
 
+- name: "Reduce swappiness"
+  become: yes
+  ansible.posix.sysctl:
+    name: vm.swappiness
+    value: 1
+    state: present
+    sysctl_file: /etc/sysctl.d/99-swappiness.conf
+  tags: swappiness
