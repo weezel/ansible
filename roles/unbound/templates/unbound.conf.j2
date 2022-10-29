@@ -1,6 +1,6 @@
 # {{ansible_managed}}
 server:
-	num-threads: 2
+	num-threads: 4
 	interface: {{ network.router_ip_addr }}
 	interface: 127.0.0.1
 	#interface: 127.0.0.1@5353
@@ -13,6 +13,8 @@ server:
 	do-not-query-localhost: no
 	hide-identity: yes
 	hide-version: yes
+	statistics-cumulative: yes
+	extended-statistics: yes
 
 	edns-buffer-size: 1232
 	prefetch: yes
