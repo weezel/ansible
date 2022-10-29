@@ -24,6 +24,9 @@
     "go.delveConfig": {
         "showGlobalVariables": true,
     },
+    "debug.openDebug": "neverOpen",
+    "debug.internalConsoleOptions": "neverOpen",
+    "debug.console.wordWrap": false,
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
     "telemetry.telemetryLevel": "off",
