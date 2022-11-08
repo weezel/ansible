@@ -33,6 +33,7 @@ packages:
     'geeqie',
     'go',
     'gsimplecal',
+    'hyperfine',
     'imwheel',
     'kdiff3',
     'keepassxc',
