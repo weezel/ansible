@@ -6,7 +6,7 @@
     state: directory
   become: true
 
-- name: "Install required packages for virt-manager"
+- name: "Install required packages for virt-manager (Ubuntu)"
   apt:
     name: "{{ item }}"
   loop:
@@ -19,6 +19,21 @@
     - qemu-utils
     - virt-manager
   become: true
+  when: ansible_os_family == "Ubuntu"
+
+- name: "Install required packages for virt-manager (Manjaro)"
+  ansible.builtin.package:
+    name: "{{ item }}"
+  loop:
+    - bridge-utils
+    - dnsmasq
+    - edk2-ovmf
+    - libvirt
+    - python-lxml
+    - qemu-desktop
+    - virt-manager
+  become: true
+  when: ansible_os_family == "Archlinux"
 
 - name: "Add user {{ user.nickname }} to appropriate groups"
   user:
@@ -27,6 +42,7 @@
     append: yes
   loop:
     - libvirt
+    - libvirt-qemu
     - kvm
   become: true
 

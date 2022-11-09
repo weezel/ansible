@@ -1,5 +1,5 @@
 # Running this playbook:
-#   ansible-playbook -v -i localhost, --connection=local manjaro_desktop.yml
+#   ansible-playbook -K -v -i localhost, --connection=local manjaro_desktop.yml -C
 ---
 - hosts: all
   vars_files:
@@ -22,4 +22,5 @@
     - { role: linux, tags: linux }
     - { role: manjaro, tags: manjaro }
     - { role: ide, tags: ide }
+    - { role: virt-manager, tags: virtmanager }
 
