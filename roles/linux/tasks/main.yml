@@ -19,7 +19,7 @@
   loop:
     - uucp
     - docker
-    - sudo
+    - wheel
   become: yes
   when: ansible_os_family == "Archlinux"
 
