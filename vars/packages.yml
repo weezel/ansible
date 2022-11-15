@@ -22,6 +22,7 @@ packages:
     'chromium',
     'code',
     'dbeaver',
+    'doas',
     'docker',
     'dstat',
     'evolution',
