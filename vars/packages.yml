@@ -24,6 +24,7 @@ packages:
     'dbeaver',
     'doas',
     'docker',
+    'docker-buildx',
     'dstat',
     'evolution',
     'fd',
