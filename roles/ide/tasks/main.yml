@@ -16,6 +16,14 @@
       loop:
         - "{{ ansible_user_dir }}/.config/VSCodium/User/settings.json"
         - "{{ ansible_user_dir }}/.config/Code - OSS/User/settings.json"
+
+    - name: Copy VSCode snippets
+      ansible.builtin.copy:
+        src: "go.json"
+        dest: "{{ item }}"
+      loop:
+        - "{{ ansible_user_dir }}/.config/VSCodium/User/snippets/go.json"
+        - "{{ ansible_user_dir }}/.config/Code - OSS/User/snippets/go.json"
   tags:
     - vscodium
 
@@ -32,4 +40,3 @@
         dest: "{{ ansible_user_dir }}/pycharm-settings/"
   tags:
     - pycharm
-
