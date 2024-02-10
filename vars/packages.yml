@@ -22,6 +22,7 @@ packages:
     'chromium',
     'code',
     'dbeaver',
+    'ddcutil',
     'doas',
     'docker',
     'docker-buildx',
