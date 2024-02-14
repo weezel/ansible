@@ -3,6 +3,7 @@
     "editor.autoClosingBrackets": "never",
     "editor.autoClosingOvertype": "never",
     "editor.autoClosingQuotes": "never",
+    "editor.autoClosingDelete": "never",
     "editor.cursorBlinking": "solid",
     "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.insertSpaces": false,
