@@ -80,5 +80,21 @@
         "run": false
     },
     "go.testExplorer.packageDisplayMode": "nested",
-    "editor.stickyScroll.enabled": true
+    "editor.stickyScroll.enabled": true,
+    "files.enableTrash": false,
+    "editor.accessibilitySupport": "off",
+    "workbench.editor.closeEmptyGroups": false,
+    "go.diagnostic.vulncheck": "Imports",
+    "go.gopls": {
+        "textDocument": {
+            "codeAction": {
+                "dataSupport": true,
+                "resolveSupport": {
+                    "properties": [
+                        "edit"
+                    ]
+                }
+            }
+        }
+    }
 }
