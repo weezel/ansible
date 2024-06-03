@@ -7,6 +7,7 @@
     "editor.cursorBlinking": "solid",
     "editor.fontFamily": "'Hack', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback'",
     "editor.insertSpaces": false,
+    "editor.autoSurround": "never",
     "editor.parameterHints.enabled": false,
     "editor.quickSuggestions": {
         "comments": "off",
@@ -21,6 +22,7 @@
         120
     ],
     "editor.suggest.insertMode": "insert",
+    "editor.inlineSuggest.enabled": false,
     "explorer.confirmDragAndDrop": false,
     "go.formatTool": "gofumpt",
     "go.useLanguageServer": true,
