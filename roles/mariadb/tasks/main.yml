@@ -24,7 +24,7 @@
   tags:
     - install_mariadb
 
-- include: mariadb.yml
+- include_tasks: mariadb.yml
   when: ansible_system == "Linux"
   tags:
     - mariadb_configure

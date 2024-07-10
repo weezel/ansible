@@ -44,7 +44,7 @@
     state: link
   become: true
 
-- include: selfsigned.yml
+- include_tasks: selfsigned.yml
   when: nginx_cert_type == "self-signed"
 
 - name: Generate DH parameters if it doesn't exist

@@ -1,4 +1,4 @@
 ---
-- include: openbsd.yml
+- include_tasks: openbsd.yml
   when: ansible_os_family == "OpenBSD"
 

@@ -2,6 +2,6 @@
 #- include_tasks: iptables.yml
 #  when: ansible_system == "Linux"
 
-- include: pf.yml
+- include_tasks: pf.yml
   when: ansible_os_family == "OpenBSD"
   become_method: doas

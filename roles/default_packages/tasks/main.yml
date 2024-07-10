@@ -1,11 +1,11 @@
 ---
-- include: manjaro.yml
+- include_tasks: manjaro.yml
   when: ansible_os_family == "Archlinux"
 
-- include: openbsd.yml
+- include_tasks: openbsd.yml
   when: ansible_os_family == "OpenBSD"
 
-- include: ubuntu.yml
+- include_tasks: ubuntu.yml
   when: ansible_os_family == "Debian" or
         ansible_os_family == "Linuxmint"
 

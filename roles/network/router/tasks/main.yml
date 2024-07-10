@@ -1,5 +1,5 @@
 ---
 - name: Install router
-  include: router.yml
+  include_tasks: router.yml
   when: ansible_os_family == "OpenBSD"
   tags: setup_router
