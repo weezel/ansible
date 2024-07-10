@@ -28,3 +28,7 @@
 
 - name: Sounds off
   import_tasks: no_sounds.yml
+
+- name: Setup headphone gestures
+  import_tasks: headphones.yml
+  tags: headphones

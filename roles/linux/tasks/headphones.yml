@@ -1,0 +1,14 @@
+---
+- name: Copy systemd MPRIS user file
+  copy:
+    src: mpris-proxy.service
+    dest: "{{ ansible_user_dir }}/.config/systemd/user/mpris-proxy.service"
+    mode: 0600
+
+- name: Install MPRIS proxy to support headphone gestures
+  ansible.builtin.systemd:
+    name: mpris-proxy.service
+    state: started
+    enabled: yes
+    scope: user
+    daemon_reload: true
