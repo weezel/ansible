@@ -28,7 +28,8 @@ server {
 }
 
 server {
-	listen 443 default_server ssl http2;
+	listen 443 default_server ssl;
+	http2 on;
 	server_name {{site_name}} www.{{site_name}};
 
 {% if ansible_system == "Linux" %}

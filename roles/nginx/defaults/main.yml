@@ -5,7 +5,6 @@ nginx_etc_dir_group: "root"
 nginx_reverse_proxy: true
 nginx_uwsgi: false
 nginx_worker_connections: 1024
-nginx_worker_processes: "{{ansible_processor_vcpus | default(1)}}"
 site_name: "example.com"
 
 ssl:

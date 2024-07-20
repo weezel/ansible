@@ -9,7 +9,7 @@ include /usr/share/nginx/modules/*.conf;
 {% if ansible_system == "OpenBSD" %}
 worker_rlimit_nofile {{nginx_worker_connections * 2}};
 {% endif %}
-worker_processes {{nginx_worker_processes}};
+worker_processes auto;
 events {
     worker_connections {{nginx_worker_connections}};
 }
