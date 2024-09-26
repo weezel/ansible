@@ -127,12 +127,14 @@ packages:
   obsd_common: [
     'checkrestart',
     'coreutils',
+    'drill',
     'ggrep',
     'gnuwatch',
     'lynx',
     'mtr--',
     'pkglocatedb',
     'py3-neovim',
+    'ripgrep',
     'rsync--iconv',
     'sysclean',
     'the_silver_searcher'
