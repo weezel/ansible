@@ -17,8 +17,9 @@
     groups: "{{ item }}"
     append: yes
   loop:
-    - uucp
+    - disk
     - docker
+    - uucp
     - wheel
   become: yes
   when: ansible_os_family == "Archlinux"
