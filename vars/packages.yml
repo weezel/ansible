@@ -71,7 +71,8 @@ packages:
     'unzip',
     'whois',
     'wireshark-qt',
-    'xclip'
+    'xclip',
+    'yazi'
   ]
 
   ubuntu: [
